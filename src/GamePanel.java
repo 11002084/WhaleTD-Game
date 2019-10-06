@@ -27,15 +27,11 @@ public class GamePanel extends JPanel {
 		g.fillRect(760, 460, 100, 100);
 		g.fillRect(910, 610, 100, 100);
 		g.fillRect(1060, 460, 100, 100);
+		g.fillRect(1210, 10, 100, 100);
+		g.fillRect(1210, 160, 100, 100);
+		g.fillRect(1210, 310, 100, 100);
 		g.fillRect(1210, 460, 100, 100);
 		g.fillRect(1210, 760, 100, 100);
 		g.fillRect(1360, 760, 100, 100);
-		g.fillRect(1360, 310, 100, 100);
-		
-		//Drawing Enemy Paths
-		g.setColor(Color.RED);
-		g.fillRect(0, 160, 410, 100);
-		g.fillRect(310, 160, 100, 400);
-		g.fillRect(10, 460, 400, 100);
 	}
 }
