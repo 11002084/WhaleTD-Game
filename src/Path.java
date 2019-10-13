@@ -1,24 +1,20 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 
 //The lone whale took the path less taken and got ambushed by erasers
 
-public class Paths {
+public class Path extends GameObject{
 
-	// Path Locations
-	int x;
-	int y;
-
-	// Path Dimensions
-	int width;
-	int height;
-
+	// Rectangle variable
+	Rectangle path;
+	
 	// Arraylist of Path Objects
-	ArrayList<Paths> pathList = new ArrayList<Paths>();
+	ArrayList<Rectangle> pathList = new ArrayList<Rectangle>();
 
 	// Constructor :)
-	Paths(int x, int y, int width, int height) {
+	Path(int x, int y, int width, int height) {
 		this.x = x;
 		this.y = y;
 		this.width = width;
