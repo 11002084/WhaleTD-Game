@@ -9,9 +9,6 @@ public class Path extends GameObject{
 
 	// Rectangle variable
 	Rectangle path;
-	
-	// Arraylist of Path Objects
-	ArrayList<Rectangle> pathList = new ArrayList<Rectangle>();
 
 	// Constructor :)
 	Path(int x, int y, int width, int height) {
@@ -22,23 +19,9 @@ public class Path extends GameObject{
 	}
 
 	// Draw Enemy Paths
-	public void drawPath(Graphics g) {
+	public void draw(Graphics g) {
 		g.setColor(Color.RED);
 		g.fillRect(x, y, width, height);
+		
 	}
 }
-
-//Drawing Enemy Paths
-//g.setColor(Color.RED);
-//g.fillRect(0, 160, 410, 100);
-//g.fillRect(310, 160, 100, 400);
-//g.fillRect(10, 460, 400, 100);
-//g.fillRect(10, 460, 100, 400);
-//g.fillRect(10, 760, 550, 100);
-//g.fillRect(460, 610, 100, 200);
-//g.fillRect(460, 610, 400, 100);
-//g.fillRect(760, 610, 100, 250);
-//g.fillRect(760, 760, 400, 100);
-//g.fillRect(1060, 610, 100, 200);
-//g.fillRect(1060, 610, 400, 100);
-//g.fillRect(1360, 0, 100, 710);
