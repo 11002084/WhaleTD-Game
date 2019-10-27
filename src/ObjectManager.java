@@ -57,10 +57,10 @@ public class ObjectManager {
 	}
 
 	//Draw Method
-	void draw() {
+	void draw(Graphics g) {
 		for(int i=0; i<pathList.size(); i++) {
-			pathList.get(1);
-			Tower.draw(g);
+			pathList.get(i).draw(g);
+			System.out.println("w");
 		}
 	}
 }
