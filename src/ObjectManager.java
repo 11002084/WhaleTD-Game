@@ -9,6 +9,12 @@ public class ObjectManager {
 	// Arraylist of Path Objects
 	ArrayList<Path> pathList = new ArrayList<Path>();
 	ArrayList<Tower> towerList = new ArrayList<Tower>();
+	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+	
+	ObjectManager(){
+		initTowers();
+		initPaths();
+	}
 
 	// Creating the motherload of tower objects
 	void initTowers() {
@@ -37,18 +43,40 @@ public class ObjectManager {
 
 	// All paths lead to Rome. These lead to Whalesville
 	void initPaths() {
-		pathList.add(new Path(0, 160, 410, 100));
-		pathList.add(new Path(310, 160, 100, 400));
-		pathList.add(new Path(10, 460, 400, 100));
-		pathList.add(new Path(10, 460, 100, 400));
-		pathList.add(new Path(10, 760, 550, 100));
-		pathList.add(new Path(460, 610, 100, 200));
+		//pathList.add(new Path(0, 160, 410, 100));
+		pathList.add(new Path(0, 160, 10, 100));
+		pathList.add(new Path(10, 160, 100, 100));
+		pathList.add(new Path(110, 160, 100, 100));
+		pathList.add(new Path(210, 160, 100, 100));
+		pathList.add(new Path(310, 160, 100, 100));
+		//pathList.add(new Path(310, 160, 100, 400));
+		pathList.add(new Path(310, 260, 100, 100));
+		pathList.add(new Path(310, 360, 100, 100));
+		pathList.add(new Path(310, 460, 100, 100));
+		//pathList.add(new Path(10, 460, 400, 100));
+		pathList.add(new Path(210, 460, 100, 100));
+		pathList.add(new Path(110, 460, 100, 100));
+		pathList.add(new Path(10, 460, 100, 100));
+		//pathList.add(new Path(10, 460, 100, 400));
+		pathList.add(new Path(10, 560, 100, 100));
+		pathList.add(new Path(10, 660, 100, 100));
+		pathList.add(new Path(10, 760, 100, 100));
+		//pathList.add(new Path(10, 760, 550, 100));
+		pathList.add(new Path(110, 760, 100, 100));
+		pathList.add(new Path(210, 760, 100, 100));
+		pathList.add(new Path(310, 760, 100, 100));
+		pathList.add(new Path(410, 760, 100, 100));
+		//pathList.add(new Path(460, 610, 100, 200));
 		pathList.add(new Path(460, 610, 400, 100));
 		pathList.add(new Path(760, 610, 100, 250));
 		pathList.add(new Path(760, 760, 400, 100));
 		pathList.add(new Path(1060, 610, 100, 200));
 		pathList.add(new Path(1060, 610, 400, 100));
 		pathList.add(new Path(1360, 0, 100, 710));
+	}
+	
+	void initEnemies() {
+		enemyList.add(new Enemy(0, 160, 20, 20));
 	}
 
 	//Update Method
@@ -58,9 +86,15 @@ public class ObjectManager {
 
 	//Draw Method
 	void draw(Graphics g) {
+		System.out.println("draw");
 		for(int i=0; i<pathList.size(); i++) {
 			pathList.get(i).draw(g);
-			System.out.println("w");
+		}
+		for(int i=0; i<towerList.size(); i++) {
+			towerList.get(i).draw(g);
+		}
+		for(int i=0; i<enemyList.size(); i++) {
+			enemyList.get(i).draw(g);
 		}
 	}
 }
