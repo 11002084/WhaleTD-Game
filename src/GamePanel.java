@@ -18,13 +18,12 @@ public class GamePanel extends JPanel implements ActionListener {
 
 	public void paintComponent(Graphics g) {
 		objectManager.draw(g);
-		System.out.println("paint");
+		objectManager.update();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("action");
 		repaint();
 		
 	}

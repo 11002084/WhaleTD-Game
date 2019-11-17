@@ -1,19 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 //I'd like to speak to your manager
 
-public class ObjectManager {
+public class ObjectManager implements MouseListener{
 	// Arraylist of Path Objects
-	ArrayList<Path> pathList = new ArrayList<Path>();
-	ArrayList<Tower> towerList = new ArrayList<Tower>();
-	ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+	public static ArrayList<Path> pathList = new ArrayList<Path>();
+	public static ArrayList<Tower> towerList = new ArrayList<Tower>();
+	public static ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	
 	ObjectManager(){
 		initTowers();
 		initPaths();
+		initEnemies();
 	}
 
 	// Creating the motherload of tower objects
@@ -78,23 +81,39 @@ public class ObjectManager {
 		pathList.add(new Path(760, 710, 100, 100));
 		pathList.add(new Path(760, 760, 100, 100));
 		//pathList.add(new Path(760, 760, 400, 100));
-		pathList.add(new Path(1060, 610, 100, 200));
-		pathList.add(new Path(1060, 610, 400, 100));
-		pathList.add(new Path(1360, 0, 100, 710));
+		pathList.add(new Path(860, 760, 100, 100));
+		pathList.add(new Path(960, 760, 100, 100));
+		//pathList.add(new Path(1060, 610, 100, 200));
+		pathList.add(new Path(1060, 760, 100, 100));
+		pathList.add(new Path(1060, 660, 100, 100));
+		pathList.add(new Path(1060, 610, 100, 100));
+		//pathList.add(new Path(1060, 610, 400, 100));
+		pathList.add(new Path(1160, 610, 100, 100));
+		pathList.add(new Path(1260, 610, 100, 100));
+		pathList.add(new Path(1360, 610, 100, 100));
+		//pathList.add(new Path(1360, 0, 100, 710));
+		pathList.add(new Path(1360, 510, 100, 100));
+		pathList.add(new Path(1360, 410, 100, 100));
+		pathList.add(new Path(1360, 310, 100, 100));
+		pathList.add(new Path(1360, 210, 100, 100));
+		pathList.add(new Path(1360, 110, 100, 100));
+		pathList.add(new Path(1360, 10, 100, 100));
+		pathList.add(new Path(1360, 0, 100, 10));
 	}
 	
 	void initEnemies() {
-		enemyList.add(new Enemy(0, 160, 20, 20));
+		enemyList.add(new Enemy(-40, 185, 50, 50));
 	}
 
 	//Update Method
 	void update() {
-
+       for(int i=0; i<enemyList.size(); i++) {
+    	   enemyList.get(i).update();
+       }
 	}
 
 	//Draw Method
 	void draw(Graphics g) {
-		System.out.println("draw");
 		for(int i=0; i<pathList.size(); i++) {
 			pathList.get(i).draw(g);
 		}
@@ -104,5 +123,34 @@ public class ObjectManager {
 		for(int i=0; i<enemyList.size(); i++) {
 			enemyList.get(i).draw(g);
 		}
+	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println("clicked");
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }

@@ -27,6 +27,7 @@ public class WhaleTD {
 		frame.setSize(WIDTH, HEIGHT);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
+		frame.addMouseListener(gamePanel.objectManager);
 	}
 	
 	//Main Method :D
