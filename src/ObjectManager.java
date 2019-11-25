@@ -8,10 +8,13 @@ import java.util.ArrayList;
 //I'd like to speak to your manager
 
 public class ObjectManager implements MouseListener{
+	static int numLives = 25;
+	
 	// Arraylist of Path Objects
 	public static ArrayList<Path> pathList = new ArrayList<Path>();
 	public static ArrayList<Tower> towerList = new ArrayList<Tower>();
 	public static ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
+	public static ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 	
 	ObjectManager(){
 		initTowers();
@@ -98,18 +101,32 @@ public class ObjectManager implements MouseListener{
 		pathList.add(new Path(1360, 210, 100, 100));
 		pathList.add(new Path(1360, 110, 100, 100));
 		pathList.add(new Path(1360, 10, 100, 100));
-		pathList.add(new Path(1360, 0, 100, 10));
+		pathList.add(new Path(1360, -90, 100, 100));
 	}
 	
 	void initEnemies() {
 		enemyList.add(new Enemy(-40, 185, 50, 50));
 	}
+	
+	public static void addProjectile(Projectile projectile) {
+		projectileList.add(projectile);
+	}
+	
+	public static void addEnemy(Enemy enemy) {
+		enemyList.add(enemy);
+	}
 
 	//Update Method
 	void update() {
-       for(int i=0; i<enemyList.size(); i++) {
-    	   enemyList.get(i).update();
+		for(int i=0; i<towerList.size(); i++) {
+			towerList.get(i).update();
+	   }
+		for(int i=0; i<enemyList.size(); i++) {
+			enemyList.get(i).update();
        }
+		for(int i=0; i<projectileList.size(); i++) {
+			projectileList.get(i).update();
+	   }
 	}
 
 	//Draw Method
@@ -123,6 +140,14 @@ public class ObjectManager implements MouseListener{
 		for(int i=0; i<enemyList.size(); i++) {
 			enemyList.get(i).draw(g);
 		}
+		for(int i=0; i<projectileList.size(); i++) {
+			projectileList.get(i).draw(g);
+		}
+	}
+	
+	public static void loseLives(Enemy enemy){
+		enemyList.remove(enemy);
+		numLives-=1;
 	}
 
 	@Override
@@ -140,6 +165,11 @@ public class ObjectManager implements MouseListener{
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		System.out.println("clicked");
+		for(int i=0; i<towerList.size(); i++) {
+			if(towerList.get(i).isClicked(e.getX(), e.getY())) {
+				towerList.get(i).buyTower();
+			}
+		}
 	}
 
 	@Override

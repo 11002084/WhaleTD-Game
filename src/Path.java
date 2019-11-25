@@ -9,13 +9,9 @@ public class Path extends GameObject{
 
 	// Rectangle variable
 	Rectangle path;
-
-	// Constructor :)
+	
 	Path(int x, int y, int width, int height) {
-		this.x = x;
-		this.y = y;
-		this.width = width;
-		this.height = height;
+		super(x, y, width, height);
 	}
 
 	// Draw Enemy Paths

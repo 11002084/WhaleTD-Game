@@ -1,18 +1,22 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Enemy extends GameObject{
+import javax.swing.Timer;
+
+public class Enemy extends GameObject implements ActionListener{
 	
 	Rectangle enemy;
 	int targetIndex = 0;
+	Timer enemyTimer;
 	
 	Enemy(int x, int y, int width, int height){
-		this.x=x;
-		this.y=y;
-		this.width=width;
-		this.height=height;
+		super(x, y, width, height);
 		targetNext();
+		this.enemyTimer = new Timer(2000, this);
+		enemyTimer.start();
 	}
 	
 	public void draw(Graphics g) {
@@ -41,7 +45,17 @@ public class Enemy extends GameObject{
 	
 	void targetNext(){
 		targetIndex++;
+		if(targetIndex >= ObjectManager.pathList.size()) {
+			ObjectManager.loseLives(this);
+		}else {
 		targetX=(ObjectManager.pathList.get(targetIndex).x)+25;
 		targetY=(ObjectManager.pathList.get(targetIndex).y)+25;
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		ObjectManager.addEnemy(new Enemy(-40, 185, 50, 50));
 	}
 }
