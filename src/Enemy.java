@@ -6,23 +6,20 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
-public class Enemy extends GameObject implements ActionListener{
+public class Enemy extends GameObject{
 	
 	Rectangle enemy;
 	int targetIndex = 0;
-	Timer enemyTimer;
 	
 	Enemy(int x, int y, int width, int height){
 		super(x, y, width, height);
 		targetNext();
-		this.enemyTimer = new Timer(2000, this);
-		enemyTimer.start();
 	}
 	
 	public void draw(Graphics g) {
 		// Drawing Tower Spaces
 		g.setColor(Color.YELLOW);
-		g.fillRect(x, y, width, height);
+		g.fillRect((int)x, (int)y, width, height);
 	}
 	
 	public void update() {
@@ -51,11 +48,5 @@ public class Enemy extends GameObject implements ActionListener{
 		targetX=(ObjectManager.pathList.get(targetIndex).x)+25;
 		targetY=(ObjectManager.pathList.get(targetIndex).y)+25;
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		ObjectManager.addEnemy(new Enemy(-40, 185, 50, 50));
 	}
 }

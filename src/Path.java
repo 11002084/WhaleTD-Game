@@ -17,7 +17,7 @@ public class Path extends GameObject{
 	// Draw Enemy Paths
 	public void draw(Graphics g) {
 		g.setColor(Color.RED);
-		g.fillRect(x, y, width, height);
+		g.fillRect((int)x, (int)y, width, height);
 		
 	}
 }
