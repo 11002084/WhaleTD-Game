@@ -26,10 +26,10 @@ public class Tower extends GameObject implements ActionListener {
 		// Drawing Tower Spaces
 		if (isActive == false) {
 			g.setColor(Color.DARK_GRAY);
-			g.fillRect((int)x, (int)y, width, height);
+			g.fillRect((int) x, (int) y, width, height);
 		} else {
 			g.setColor(Color.GREEN);
-			g.fillRect((int)x, (int)y, width, height);
+			g.fillRect((int) x, (int) y, width, height);
 		}
 	}
 
@@ -54,8 +54,10 @@ public class Tower extends GameObject implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (isActive == true) {
-			Enemy target = ObjectManager.getClosestEnemy(x+(width/2)-5, y+(height/2)-5);
-			ObjectManager.addProjectile(new Projectile(x+(width/2)-5, y+(height/2)-5, 10, 10, target.x, target.y));
+			Enemy target = ObjectManager.getClosestEnemy(x + (width / 2) - 5, y + (height / 2) - 5, 350);
+			if (target != ObjectManager.fake) {
+				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, target.x, target.y, 1.5));
+			}
 		}
 	}
 }

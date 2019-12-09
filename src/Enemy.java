@@ -10,10 +10,14 @@ public class Enemy extends GameObject{
 	
 	Rectangle enemy;
 	int targetIndex = 0;
+	int health = 100;
 	
 	Enemy(int x, int y, int width, int height){
 		super(x, y, width, height);
 		targetNext();
+	}
+	public void reduceHealth() {
+		health-=25;
 	}
 	
 	public void draw(Graphics g) {
@@ -23,6 +27,8 @@ public class Enemy extends GameObject{
 	}
 	
 	public void update() {
+		super.update();
+		
 		if(x<targetX) {
 			x++;
 		}

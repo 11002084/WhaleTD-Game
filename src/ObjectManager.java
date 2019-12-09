@@ -14,6 +14,7 @@ import javax.swing.Timer;
 public class ObjectManager implements MouseListener, ActionListener {
 	static int numLives = 25;
 	Timer enemyTimer = new Timer(2000, this);
+	public static Enemy fake;
 
 	// Arraylist of Path Objects
 	public static ArrayList<Path> pathList = new ArrayList<Path>();
@@ -25,6 +26,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		initTowers();
 		initPaths();
 		initEnemies();
+		fake = new Enemy(-69,-420, 0, 0);
 		enemyTimer.start();
 	}
 
@@ -32,15 +34,21 @@ public class ObjectManager implements MouseListener, ActionListener {
 		return Math.sqrt(((x - x2) * (x - x2)) + ((y - y2) * (y - y2)));
 	}
 
-	public static Enemy getClosestEnemy(double d, double e) {
+	public static Enemy getClosestEnemy(double d, double e, double max) {
 		double shortestDistance = 10000;
 		int enemyIndex = -1;
 
 		for (int i = 0; i < enemyList.size(); i++) {
-			if (calcDist(d, enemyList.get(i).x, e, enemyList.get(i).y) < shortestDistance) {
+			double dist = calcDist(d, enemyList.get(i).x, e, enemyList.get(i).y);
+			
+			if (dist < shortestDistance && dist < max) {
 				shortestDistance = calcDist(d, enemyList.get(i).x, e, enemyList.get(i).y);
 				enemyIndex = i;
 			}
+		}
+		
+		if(enemyIndex == -1) {
+			return fake;
 		}
 
 		return enemyList.get(enemyIndex);
@@ -152,13 +160,40 @@ public class ObjectManager implements MouseListener, ActionListener {
 			projectileList.get(i).update();
 		}
 
+		checkCollision();
+		checkHealth();
 		purgeObjects();
+	}
+	
+	void checkCollision() {
+		for (int i = 0; i < enemyList.size(); i++) {
+			for (int j = 0; j < projectileList.size(); j++) {
+				if (projectileList.get(j).collisionBox.intersects(enemyList.get(i).collisionBox)) {
+					enemyList.get(i).reduceHealth();
+					projectileList.get(j).isAlive = false;
+				}
+			}
+		}
+	}
+	
+	void checkHealth() {
+		for(int i=0; i<enemyList.size(); i++) {
+			if(enemyList.get(i).health <= 0) {
+				enemyList.get(i).isAlive = false;
+			}
+		}
 	}
 
 	void purgeObjects() {
 		for (int i = projectileList.size() - 1; i >= 0; i--) {
 			if (projectileList.get(i).isAlive == false) {
 				projectileList.remove(i);
+			}
+		}
+		
+		for (int i=enemyList.size()-1; i >= 0; i--) {
+			if (enemyList.get(i).isAlive == false) {
+				enemyList.remove(i);
 			}
 		}
 	}

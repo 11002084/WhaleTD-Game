@@ -7,17 +7,19 @@ public class Projectile extends GameObject{
 	Rectangle projectile;
 	double speedX;
 	double speedY;
+	double speed;
 	
 	// Constructor :)
-	Projectile(double d, double e, int width, int height, double x, double y) {
+	Projectile(double d, double e, int width, int height, double x, double y, double speed) {
 		super(d, e, width, height);
 		this.targetX = x;
 		this.targetY = y;
 		double diffX = x - d;
 		double diffY = y - e;
-		double mag = Math.sqrt((diffX * diffX) + (diffY+diffY));
-		this.speedX = diffX/mag;
-		this.speedY = diffY/mag;
+		double mag = Math.sqrt((diffX * diffX) + (diffY*diffY));
+		this.speed = speed;
+		this.speedX = (diffX/mag)*speed;
+		this.speedY = (diffY/mag)*speed;
 	}
 	
 	// Draw Projectiles
@@ -27,6 +29,7 @@ public class Projectile extends GameObject{
 	}
 		
 	public void update() {
+		super.update();
 		x+=speedX;
 		y+=speedY;
 		checkBounds();
