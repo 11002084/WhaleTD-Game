@@ -12,8 +12,11 @@ import javax.swing.Timer;
 //I'd like to speak to your manager
 
 public class ObjectManager implements MouseListener, ActionListener {
+	int spawnDelay = 200;
+	int spawnCounter = 0;
+	int totalTime = 0;
 	static int numLives = 25;
-	Timer enemyTimer = new Timer(2000, this);
+	Timer enemyTimer = new Timer(10, this);
 	public static Enemy fake;
 
 	// Arraylist of Path Objects
@@ -26,11 +29,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 		initTowers();
 		initPaths();
 		initEnemies();
-		fake = new Enemy(-69,-420, 0, 0);
+		fake = new Enemy(-69, -420, 0, 0);
 		enemyTimer.start();
 	}
 
-	static double calcDist(double x, double x2, double y, double y2) {
+	public static double calcDist(double x, double x2, double y, double y2) {
 		return Math.sqrt(((x - x2) * (x - x2)) + ((y - y2) * (y - y2)));
 	}
 
@@ -40,14 +43,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		for (int i = 0; i < enemyList.size(); i++) {
 			double dist = calcDist(d, enemyList.get(i).x, e, enemyList.get(i).y);
-			
+
 			if (dist < shortestDistance && dist < max) {
 				shortestDistance = calcDist(d, enemyList.get(i).x, e, enemyList.get(i).y);
 				enemyIndex = i;
 			}
 		}
-		
-		if(enemyIndex == -1) {
+
+		if (enemyIndex == -1) {
 			return fake;
 		}
 
@@ -164,7 +167,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		checkHealth();
 		purgeObjects();
 	}
-	
+
 	void checkCollision() {
 		for (int i = 0; i < enemyList.size(); i++) {
 			for (int j = 0; j < projectileList.size(); j++) {
@@ -175,10 +178,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 			}
 		}
 	}
-	
+
 	void checkHealth() {
-		for(int i=0; i<enemyList.size(); i++) {
-			if(enemyList.get(i).health <= 0) {
+		for (int i = 0; i < enemyList.size(); i++) {
+			if (enemyList.get(i).health <= 0) {
 				enemyList.get(i).isAlive = false;
 			}
 		}
@@ -190,8 +193,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 				projectileList.remove(i);
 			}
 		}
-		
-		for (int i=enemyList.size()-1; i >= 0; i--) {
+
+		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
 				enemyList.remove(i);
 			}
@@ -256,6 +259,17 @@ public class ObjectManager implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		addEnemy(new Enemy(-40, 185, 50, 50));
+		spawnCounter += 1;
+		totalTime += 10;
+		if (spawnCounter == spawnDelay) {
+			spawnCounter = 0;
+			addEnemy(new Enemy(-40, 185, 50, 50));
+		}
+		if (spawnDelay > 10) {
+			if (totalTime % 60000 == 0) {
+				spawnDelay -= 10;
+				spawnCounter = spawnDelay-1;
+			}
+		}
 	}
 }

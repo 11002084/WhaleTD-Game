@@ -8,19 +8,26 @@ public class Projectile extends GameObject{
 	double speedX;
 	double speedY;
 	double speed;
+	double maxRange;
+	double originX;
+	double originY;
 	
 	// Constructor :)
-	Projectile(double d, double e, int width, int height, double x, double y, double speed) {
-		super(d, e, width, height);
-		this.targetX = x;
-		this.targetY = y;
-		double diffX = x - d;
-		double diffY = y - e;
+	Projectile(double originX, double originY, int width, int height, double targetX, double targetY, double speed, double maxRange) {
+		super(originX, originY, width, height);
+		this.targetX = targetX;
+		this.targetY = targetY;
+		this.originX = originX;
+		this.originY = originY;
+		double diffX = targetX - originX;
+		double diffY = targetY - originY;
 		double mag = Math.sqrt((diffX * diffX) + (diffY*diffY));
 		this.speed = speed;
 		this.speedX = (diffX/mag)*speed;
 		this.speedY = (diffY/mag)*speed;
+		this.maxRange = maxRange;
 	}
+	
 	
 	// Draw Projectiles
 	public void draw(Graphics g) {
@@ -33,6 +40,9 @@ public class Projectile extends GameObject{
 		x+=speedX;
 		y+=speedY;
 		checkBounds();
+		if(ObjectManager.calcDist(originX, x, originY, y) > maxRange) {
+			isAlive = false;
+		}
 	}
 	
 	public void checkBounds() {

@@ -56,7 +56,7 @@ public class Tower extends GameObject implements ActionListener {
 		if (isActive == true) {
 			Enemy target = ObjectManager.getClosestEnemy(x + (width / 2) - 5, y + (height / 2) - 5, 350);
 			if (target != ObjectManager.fake) {
-				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, target.x, target.y, 1.5));
+				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, (target.x)+25, (target.y)+25, 1.5, 200));
 			}
 		}
 	}
