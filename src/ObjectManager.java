@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.Timer;
 
 //I'd like to speak to your manager
@@ -15,9 +16,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int spawnDelay = 200;
 	int spawnCounter = 0;
 	int totalTime = 0;
-	static int numLives = 25;
+	static int numLives = 10;
 	Timer enemyTimer = new Timer(10, this);
 	public static Enemy fake;
+	static int money = 150;
 
 	// Arraylist of Path Objects
 	public static ArrayList<Path> pathList = new ArrayList<Path>();
@@ -166,6 +168,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 		checkCollision();
 		checkHealth();
 		purgeObjects();
+		GamePanel.setMoneyLabel(money+" Gold  ");
+		GamePanel.setLivesLabel(numLives+" Lives");
 	}
 
 	void checkCollision() {
@@ -197,6 +201,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
 				enemyList.remove(i);
+				money+=10;
 			}
 		}
 	}
@@ -238,8 +243,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 		// TODO Auto-generated method stub
 		System.out.println("clicked");
 		for (int i = 0; i < towerList.size(); i++) {
-			if (towerList.get(i).isClicked(e.getX(), e.getY())) {
+			if (towerList.get(i).isClicked(e.getX(), e.getY()) && money>=50) {
 				towerList.get(i).buyTower();
+				money-=50;
 			}
 		}
 	}
@@ -266,7 +272,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 			addEnemy(new Enemy(-40, 185, 50, 50));
 		}
 		if (spawnDelay > 10) {
-			if (totalTime % 60000 == 0) {
+			if (totalTime % 20000 == 0) {
 				spawnDelay -= 10;
 				spawnCounter = spawnDelay-1;
 			}

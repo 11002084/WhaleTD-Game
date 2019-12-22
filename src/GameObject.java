@@ -16,9 +16,6 @@ public class GameObject {
 	boolean isAlive = true;
 	Rectangle collisionBox;
 	
-	//Money
-	public int money = 100;
-	
 	// Constructor :)
 	GameObject(double x, double y, int width, int height) {
 		this.x = x;

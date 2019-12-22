@@ -24,6 +24,9 @@ public class Enemy extends GameObject{
 		// Drawing Tower Spaces
 		g.setColor(Color.YELLOW);
 		g.fillRect((int)x, (int)y, width, height);
+		g.fillRect((int)x, (int)y - 20, 50, 10);
+		g.setColor(Color.BLACK);
+		g.fillRect((int)x+(health/2), (int)y-20, 50-(health/2), 10);
 	}
 	
 	public void update() {
