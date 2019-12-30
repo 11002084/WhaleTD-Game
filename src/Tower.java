@@ -8,6 +8,9 @@ import javax.swing.Timer;
 public class Tower extends GameObject implements ActionListener {
 
 	boolean isActive;
+	boolean menu;
+	String towerType;
+	int towerLevel;
 	Timer shootTimer;
 
 	// Rectangle variable
@@ -33,14 +36,25 @@ public class Tower extends GameObject implements ActionListener {
 		}
 	}
 
-	boolean isClicked(int mouseX, int mouseY) {
+	boolean isClicked(double mouseX, double mouseY) {
 		if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height) {
+			ObjectManager.disableMenus(this);
+			menu = !menu;
 			return true;
 		} else {
 			return false;
 		}
 	}
 
+	void drawMenu(Graphics g) {
+		if(menu == true) {
+			g.setColor(Color.BLUE);
+			g.fillRect(200, 245, 200, 200);
+			g.fillRect(650, 245, 200, 200);
+			g.fillRect(1100, 245, 200, 200);
+		}
+	}
+	
 	void buyTower() {
 		isActive = true;
 	}

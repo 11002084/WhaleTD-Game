@@ -168,8 +168,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 		checkCollision();
 		checkHealth();
 		purgeObjects();
-		GamePanel.setMoneyLabel(money+" Gold  ");
-		GamePanel.setLivesLabel(numLives+" Lives");
+		GamePanel.setMoneyLabel(money + " Gold  ");
+		GamePanel.setLivesLabel(numLives + " Lives");
 	}
 
 	void checkCollision() {
@@ -201,7 +201,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
 				enemyList.remove(i);
-				money+=10;
+				money += 10;
 			}
 		}
 	}
@@ -211,14 +211,25 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < pathList.size(); i++) {
 			pathList.get(i).draw(g);
 		}
-		for (int i = 0; i < towerList.size(); i++) {
-			towerList.get(i).draw(g);
-		}
 		for (int i = 0; i < enemyList.size(); i++) {
 			enemyList.get(i).draw(g);
 		}
 		for (int i = 0; i < projectileList.size(); i++) {
 			projectileList.get(i).draw(g);
+		}
+		for (int i = 0; i < towerList.size(); i++) {
+			towerList.get(i).draw(g);
+		}
+		for (int i=0; i < towerList.size(); i++) {
+			towerList.get(i).drawMenu(g);
+		}
+	}
+
+	public static void disableMenus(Tower tower) {
+		for (int i = 0; i < towerList.size(); i++) {
+			if (towerList.get(i) != tower) {
+				towerList.get(i).menu = false;
+			}
 		}
 	}
 
@@ -241,11 +252,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println("clicked");
 		for (int i = 0; i < towerList.size(); i++) {
-			if (towerList.get(i).isClicked(e.getX(), e.getY()) && money>=50) {
+			if (towerList.get(i).isClicked(e.getX(), e.getY()) && money >= 50) {
 				towerList.get(i).buyTower();
-				money-=50;
+				money -= 50;
 			}
 		}
 	}
@@ -274,7 +284,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		if (spawnDelay > 10) {
 			if (totalTime % 20000 == 0) {
 				spawnDelay -= 10;
-				spawnCounter = spawnDelay-1;
+				spawnCounter = spawnDelay - 1;
 			}
 		}
 	}
