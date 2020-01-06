@@ -20,6 +20,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 	Timer enemyTimer = new Timer(10, this);
 	public static Enemy fake;
 	static int money = 150;
+	public static Rectangle button1;
+	public static Rectangle button2;
+	public static Rectangle button3;
 
 	// Arraylist of Path Objects
 	public static ArrayList<Path> pathList = new ArrayList<Path>();
@@ -28,6 +31,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 
 	ObjectManager() {
+		button1 = new Rectangle(200, 245, 200, 200);
+		button2 = new Rectangle(650, 245, 200, 200);
+		button3 = new Rectangle(1100, 245, 200, 200);
 		initTowers();
 		initPaths();
 		initEnemies();
@@ -217,6 +223,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < projectileList.size(); i++) {
 			projectileList.get(i).draw(g);
 		}
+		for (int i = 0; i <  towerList.size(); i++) {
+			towerList.get(i).drawTowerOutline(g);
+		}
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).draw(g);
 		}
@@ -253,8 +262,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < towerList.size(); i++) {
-			if (towerList.get(i).isClicked(e.getX(), e.getY()) && money >= 50) {
-				towerList.get(i).buyTower();
+			if (towerList.get(i).isClicked(e.getX(), e.getY()) == true && towerList.get(i).isActive == false && money >= 50) {
+				towerList.get(i).selectTowerType();
 				money -= 50;
 			}
 		}
