@@ -14,6 +14,7 @@ public class GamePanel extends JPanel implements ActionListener {
 	ObjectManager objectManager =  new ObjectManager();
 	static JLabel labelMoney =  new JLabel();
 	static JLabel labelLives = new JLabel();
+	static JLabel instructions = new JLabel();
 			
 	GamePanel(){
 		frameDraw = new Timer(1000 / 60, this);
@@ -28,6 +29,10 @@ public class GamePanel extends JPanel implements ActionListener {
 	
 	static void setLivesLabel(String livesNumber) {
 		labelLives.setText("<html><pre><font face=\"monaco\" size=\"20\">" + livesNumber + "</font></pre></html>");
+	}
+	
+	static void setInstructions() {
+		instructions.setText("<html><pre><font face=\"monaco\" size=\"15\"> + "" + "</font></pre></html>");
 	}
 
 	public void paintComponent(Graphics g) {

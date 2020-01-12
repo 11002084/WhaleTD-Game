@@ -43,7 +43,37 @@ public class Tower extends GameObject implements ActionListener {
 	}
 
 	boolean isClicked(double mouseX, double mouseY) {
-		if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height) {
+		if (menu == true && ObjectManager.money >= 50) {
+			Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY, 1, 1);
+			if (mouse.intersects(ObjectManager.button1)) {
+				ObjectManager.disableMenus(this);
+				menu = !menu;
+				towerType = "arrow";
+				buyTower();
+				ObjectManager.money-=50;
+				return true;
+			}
+			if (mouse.intersects(ObjectManager.button2)) {
+				ObjectManager.disableMenus(this);
+				menu = !menu;
+				towerType = "rifle";
+				buyTower();
+				ObjectManager.money-=50;
+				return true;
+			}
+			if (mouse.intersects(ObjectManager.button3)) {
+				ObjectManager.disableMenus(this);
+				menu = !menu;
+				towerType = "cannon";
+				buyTower();
+				ObjectManager.money-=50;
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		else if (mouseX > x && mouseX < x + width && mouseY > y && mouseY < y + height) {
 			ObjectManager.disableMenus(this);
 			menu = !menu;
 			return true;
@@ -51,36 +81,19 @@ public class Tower extends GameObject implements ActionListener {
 			return false;
 		}
 	}
-	
-	void selectTowerType() {
-		buyTower();
-	}
-	
-//	if (mouseX > 200 && mouseX < 400 && mouseY > 245 && mouseY < 445) {
-//		ObjectManager.disableMenus(this);
-//		menu = !menu;
-//		towerType = "arrow";
-//		return true;
-//	} else if (mouseX > 650 && mouseX < 850 && mouseY > 245 && mouseY < 445) {
-//		ObjectManager.disableMenus(this);
-//		menu = !menu;
-//		towerType = "rifle";
-//		return true;
-//	} else if (mouseX > 1100 && mouseX < 1300 && mouseY > 245 && mouseY < 445) {
-//		ObjectManager.disableMenus(this);
-//		menu = !menu;
-//		towerType = "cannon";
-//		return true;
-//	} else {
-//		return false;
-//	}
 
 	void drawMenu(Graphics g) {
 		if (menu == true) {
-			g.setColor(Color.BLUE);
-			g.fillRect(ObjectManager.button1.x, );
-			g.fillRect(650, 245, 200, 200);
-			g.fillRect(1100, 245, 200, 200);
+			g.setColor(Color.GREEN);
+			g.fillRect(ObjectManager.button1.x, ObjectManager.button1.y, ObjectManager.button1.width,ObjectManager.button1.height);
+			g.setColor(Color.CYAN);
+			g.fillRect(ObjectManager.button2.x, ObjectManager.button2.y, ObjectManager.button2.width,ObjectManager.button2.height);
+			g.setColor(Color.PINK);
+			g.fillRect(ObjectManager.button3.x, ObjectManager.button3.y, ObjectManager.button3.width,ObjectManager.button3.height);
+			g.setColor(Color.BLACK);
+			g.drawRect(ObjectManager.button1.x, ObjectManager.button1.y, ObjectManager.button1.width,ObjectManager.button1.height);
+			g.drawRect(ObjectManager.button2.x, ObjectManager.button2.y, ObjectManager.button2.width,ObjectManager.button2.height);
+			g.drawRect(ObjectManager.button3.x, ObjectManager.button3.y, ObjectManager.button3.width,ObjectManager.button3.height);
 		}
 	}
 

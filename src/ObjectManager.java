@@ -23,6 +23,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static Rectangle button1;
 	public static Rectangle button2;
 	public static Rectangle button3;
+	public static Rectangle instructionButton;
 
 	// Arraylist of Path Objects
 	public static ArrayList<Path> pathList = new ArrayList<Path>();
@@ -34,6 +35,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		button1 = new Rectangle(200, 245, 200, 200);
 		button2 = new Rectangle(650, 245, 200, 200);
 		button3 = new Rectangle(1100, 245, 200, 200);
+		instructionButton = new Rectangle(800, 50, 100, 50);
 		initTowers();
 		initPaths();
 		initEnemies();
@@ -262,10 +264,13 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < towerList.size(); i++) {
-			if (towerList.get(i).isClicked(e.getX(), e.getY()) == true && towerList.get(i).isActive == false && money >= 50) {
-				towerList.get(i).selectTowerType();
-				money -= 50;
+			if (towerList.get(i).isClicked(e.getX(), e.getY()) == true) {
+				//This is important for some reason
 			}
+		}
+		
+		if(instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
+			
 		}
 	}
 
