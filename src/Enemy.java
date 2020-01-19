@@ -17,7 +17,7 @@ public class Enemy extends GameObject{
 		targetNext();
 	}
 	public void reduceHealth() {
-		health-=25;
+		health-=5;
 	}
 	
 	public void draw(Graphics g) {

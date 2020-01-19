@@ -20,8 +20,6 @@ public class Tower extends GameObject implements ActionListener {
 	Tower(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		this.isActive = false;
-		this.shootTimer = new Timer(1000, this);
-		shootTimer.start();
 	}
 
 	// Paint Component Method
@@ -43,14 +41,16 @@ public class Tower extends GameObject implements ActionListener {
 	}
 
 	boolean isClicked(double mouseX, double mouseY) {
+		Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY, 1, 1);
 		if (menu == true && ObjectManager.money >= 50) {
-			Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY, 1, 1);
 			if (mouse.intersects(ObjectManager.button1)) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "arrow";
 				buyTower();
 				ObjectManager.money-=50;
+				this.shootTimer = new Timer(500, this);
+				shootTimer.start();
 				return true;
 			}
 			if (mouse.intersects(ObjectManager.button2)) {
@@ -59,6 +59,8 @@ public class Tower extends GameObject implements ActionListener {
 				towerType = "rifle";
 				buyTower();
 				ObjectManager.money-=50;
+				this.shootTimer = new Timer(1000, this);
+				shootTimer.start();
 				return true;
 			}
 			if (mouse.intersects(ObjectManager.button3)) {
@@ -67,6 +69,8 @@ public class Tower extends GameObject implements ActionListener {
 				towerType = "cannon";
 				buyTower();
 				ObjectManager.money-=50;
+				this.shootTimer = new Timer(3000, this);
+				shootTimer.start();
 				return true;
 			} else {
 				return false;
@@ -119,8 +123,7 @@ public class Tower extends GameObject implements ActionListener {
 		if (isActive == true) {
 			Enemy target = ObjectManager.getClosestEnemy(x + (width / 2) - 5, y + (height / 2) - 5, 350);
 			if (target != ObjectManager.fake) {
-				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10,
-						(target.x) + 25, (target.y) + 25, 1.5, 200));
+				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10,(target.x) + 25, (target.y) + 25, 1.5, 200));
 			}
 		}
 	}

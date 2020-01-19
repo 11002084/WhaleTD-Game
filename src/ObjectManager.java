@@ -8,6 +8,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 //I'd like to speak to your manager
@@ -35,7 +36,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		button1 = new Rectangle(200, 245, 200, 200);
 		button2 = new Rectangle(650, 245, 200, 200);
 		button3 = new Rectangle(1100, 245, 200, 200);
-		instructionButton = new Rectangle(800, 50, 100, 50);
+		instructionButton = new Rectangle(1000, 10, 100, 100);
 		initTowers();
 		initPaths();
 		initEnemies();
@@ -234,6 +235,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i=0; i < towerList.size(); i++) {
 			towerList.get(i).drawMenu(g);
 		}
+		
+		g.setColor(Color.RED);
+		g.fillRect(instructionButton.x, instructionButton.y, instructionButton.width, instructionButton.height/2);
 	}
 
 	public static void disableMenus(Tower tower) {
@@ -270,7 +274,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		}
 		
 		if(instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
-			
+			JOptionPane.showMessageDialog(null, "Instruction");
 		}
 	}
 

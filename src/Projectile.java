@@ -11,6 +11,7 @@ public class Projectile extends GameObject{
 	double maxRange;
 	double originX;
 	double originY;
+	String projectileType;
 	
 	// Constructor :)
 	Projectile(double originX, double originY, int width, int height, double targetX, double targetY, double speed, double maxRange) {
@@ -31,8 +32,8 @@ public class Projectile extends GameObject{
 	
 	// Draw Projectiles
 	public void draw(Graphics g) {
-			g.setColor(Color.BLACK);
-			g.fillRect((int)x, (int)y, width, height);		
+		g.setColor(Color.BLACK);
+		g.fillRect((int)x, (int)y, width, height);		
 	}
 		
 	public void update() {
