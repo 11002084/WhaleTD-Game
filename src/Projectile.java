@@ -11,10 +11,10 @@ public class Projectile extends GameObject{
 	double maxRange;
 	double originX;
 	double originY;
-	String projectileType;
+	String type;
 	
 	// Constructor :)
-	Projectile(double originX, double originY, int width, int height, double targetX, double targetY, double speed, double maxRange) {
+	Projectile(double originX, double originY, int width, int height, double targetX, double targetY, double speed, double maxRange, String type) {
 		super(originX, originY, width, height);
 		this.targetX = targetX;
 		this.targetY = targetY;
@@ -27,6 +27,7 @@ public class Projectile extends GameObject{
 		this.speedX = (diffX/mag)*speed;
 		this.speedY = (diffY/mag)*speed;
 		this.maxRange = maxRange;
+		this.type = type;
 	}
 	
 	

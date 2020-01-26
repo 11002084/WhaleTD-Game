@@ -30,6 +30,10 @@ public class GamePanel extends JPanel implements ActionListener {
 	static void setLivesLabel(String livesNumber) {
 		labelLives.setText("<html><pre><font face=\"monaco\" size=\"20\">" + livesNumber + "</font></pre></html>");
 	}
+	
+	static void instructionText() {
+		instructions.setText("<html><pre><font face=\"monaco\" size=\"20\">" + "Click Me For Instructions" + "</font></pre></html>");
+	}
 
 	public void paintComponent(Graphics g) {
 		objectManager.draw(g);

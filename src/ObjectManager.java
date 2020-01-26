@@ -17,6 +17,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int spawnDelay = 200;
 	int spawnCounter = 0;
 	int totalTime = 0;
+	int reduceAmount;
 	static int numLives = 10;
 	Timer enemyTimer = new Timer(10, this);
 	public static Enemy fake;
@@ -179,13 +180,26 @@ public class ObjectManager implements MouseListener, ActionListener {
 		purgeObjects();
 		GamePanel.setMoneyLabel(money + " Gold  ");
 		GamePanel.setLivesLabel(numLives + " Lives");
+		GamePanel.instructionText();
 	}
 
 	void checkCollision() {
 		for (int i = 0; i < enemyList.size(); i++) {
 			for (int j = 0; j < projectileList.size(); j++) {
 				if (projectileList.get(j).collisionBox.intersects(enemyList.get(i).collisionBox)) {
-					enemyList.get(i).reduceHealth();
+					if (projectileList.get(j).type.equals("arrow")) {
+						reduceAmount = 2;
+					}
+					else if(projectileList.get(j).type.equals("rifle")) {
+						reduceAmount = 5;
+					}
+					else if(projectileList.get(j).type.equals("cannon")) {
+						reduceAmount = 10;
+					}
+					
+					for(int k=0; k<reduceAmount; k++) {
+						enemyList.get(i).reduceHealth();
+					}
 					projectileList.get(j).isAlive = false;
 				}
 			}
@@ -226,18 +240,18 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < projectileList.size(); i++) {
 			projectileList.get(i).draw(g);
 		}
-		for (int i = 0; i <  towerList.size(); i++) {
+		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).drawTowerOutline(g);
 		}
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).draw(g);
 		}
-		for (int i=0; i < towerList.size(); i++) {
+		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).drawMenu(g);
 		}
-		
+
 		g.setColor(Color.RED);
-		g.fillRect(instructionButton.x, instructionButton.y, instructionButton.width, instructionButton.height/2);
+		g.fillRect(instructionButton.x, instructionButton.y, instructionButton.width, instructionButton.height / 2);
 	}
 
 	public static void disableMenus(Tower tower) {
@@ -269,11 +283,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < towerList.size(); i++) {
 			if (towerList.get(i).isClicked(e.getX(), e.getY()) == true) {
-				//This is important for some reason
+				// This is important for some reason
 			}
 		}
-		
-		if(instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
+
+		if (instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
 			JOptionPane.showMessageDialog(null, "Instruction");
 		}
 	}
