@@ -14,12 +14,13 @@ import javax.swing.Timer;
 //I'd like to speak to your manager
 
 public class ObjectManager implements MouseListener, ActionListener {
-	int spawnDelay = 200;
+	int spawnDelay = 1000;
 	int spawnCounter = 0;
 	int totalTime = 0;
 	int reduceAmount;
 	static int numLives = 10;
 	Timer enemyTimer = new Timer(10, this);
+	Timer moneyTimer = new Timer(1000, this);
 	public static Enemy fake;
 	static int money = 150;
 	public static Rectangle button1;
@@ -43,6 +44,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		initEnemies();
 		fake = new Enemy(-69, -420, 0, 0);
 		enemyTimer.start();
+		moneyTimer.start();
 	}
 
 	public static double calcDist(double x, double x2, double y, double y2) {
@@ -165,14 +167,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// Update Method
 	void update() {
+		for (int i = 0; i < projectileList.size(); i++) {
+			projectileList.get(i).update();
+		}
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).update();
 		}
 		for (int i = 0; i < enemyList.size(); i++) {
 			enemyList.get(i).update();
-		}
-		for (int i = 0; i < projectileList.size(); i++) {
-			projectileList.get(i).update();
 		}
 
 		checkCollision();
@@ -189,15 +191,13 @@ public class ObjectManager implements MouseListener, ActionListener {
 				if (projectileList.get(j).collisionBox.intersects(enemyList.get(i).collisionBox)) {
 					if (projectileList.get(j).type.equals("arrow")) {
 						reduceAmount = 2;
-					}
-					else if(projectileList.get(j).type.equals("rifle")) {
+					} else if (projectileList.get(j).type.equals("rifle")) {
 						reduceAmount = 5;
-					}
-					else if(projectileList.get(j).type.equals("cannon")) {
+					} else if (projectileList.get(j).type.equals("cannon")) {
 						reduceAmount = 10;
 					}
-					
-					for(int k=0; k<reduceAmount; k++) {
+
+					for (int k = 0; k < reduceAmount; k++) {
 						enemyList.get(i).reduceHealth();
 					}
 					projectileList.get(j).isAlive = false;
@@ -237,9 +237,6 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < enemyList.size(); i++) {
 			enemyList.get(i).draw(g);
 		}
-		for (int i = 0; i < projectileList.size(); i++) {
-			projectileList.get(i).draw(g);
-		}
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).drawTowerOutline(g);
 		}
@@ -248,6 +245,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 		}
 		for (int i = 0; i < towerList.size(); i++) {
 			towerList.get(i).drawMenu(g);
+		}
+		for (int i = 0; i < projectileList.size(); i++) {
+			projectileList.get(i).draw(g);
 		}
 
 		g.setColor(Color.RED);
@@ -307,17 +307,23 @@ public class ObjectManager implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		spawnCounter += 1;
-		totalTime += 10;
-		if (spawnCounter == spawnDelay) {
-			spawnCounter = 0;
-			addEnemy(new Enemy(-40, 185, 50, 50));
-		}
-		if (spawnDelay > 10) {
-			if (totalTime % 20000 == 0) {
-				spawnDelay -= 10;
-				spawnCounter = spawnDelay - 1;
+		if (e.getSource() == enemyTimer) {
+			spawnCounter += 1;
+			totalTime += 10;
+			if (spawnCounter == spawnDelay) {
+				spawnCounter = 0;
+				addEnemy(new Enemy(-40, 185, 50, 50));
 			}
+			if (spawnDelay > 10) {
+				if (totalTime % 20000 == 0) {
+					spawnDelay -= 10;
+					spawnCounter = spawnDelay - 1;
+				}
+			}
+		}
+		
+		if(e.getSource() == moneyTimer) {
+			money++;
 		}
 	}
 }
