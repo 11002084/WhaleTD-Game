@@ -11,6 +11,8 @@ public class Enemy extends GameObject{
 	Rectangle enemy;
 	int targetIndex = 0;
 	int health = 100;
+	int speed = 1;
+	int moveDirection;
 	
 	Enemy(int x, int y, int width, int height){
 		super(x, y, width, height);
@@ -18,6 +20,14 @@ public class Enemy extends GameObject{
 	}
 	public void reduceHealth() {
 		health-=5;
+	}
+	
+	int getDirection() {
+		return moveDirection;
+	}
+	
+	int getSpeed() {
+		return speed;
 	}
 	
 	public void draw(Graphics g) {
@@ -33,16 +43,20 @@ public class Enemy extends GameObject{
 		super.update();
 		
 		if(x<targetX) {
-			x++;
+			x+=speed;
+			moveDirection = 2;
 		}
 		if(x>targetX) {
-			x--;
+			x-=speed;
+			moveDirection = 4;
 		}
 		if(y<targetY) {
-		    y++;
+		    y+=speed;
+		    moveDirection = 3;
 		}
 		if(y>targetY) {
-			y--;
+			y-=speed;
+			moveDirection = 1;
 		}
 		if(x==targetX && y==targetY) {
 			targetNext();

@@ -22,7 +22,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	Timer enemyTimer = new Timer(10, this);
 	Timer moneyTimer = new Timer(1000, this);
 	public static Enemy fake;
-	static int money = 150;
+	static int money = 100;
 	public static Rectangle button1;
 	public static Rectangle button2;
 	public static Rectangle button3;
@@ -45,6 +45,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		fake = new Enemy(-69, -420, 0, 0);
 		enemyTimer.start();
 		moneyTimer.start();
+		
 	}
 
 	public static double calcDist(double x, double x2, double y, double y2) {
@@ -179,10 +180,16 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		checkCollision();
 		checkHealth();
+		//checkLives();
 		purgeObjects();
 		GamePanel.setMoneyLabel(money + " Gold  ");
 		GamePanel.setLivesLabel(numLives + " Lives");
-		GamePanel.instructionText();
+	}
+	
+	void checkLives() {
+		if(numLives <= 0) {
+			System.exit(0);
+		}
 	}
 
 	void checkCollision() {
@@ -288,7 +295,18 @@ public class ObjectManager implements MouseListener, ActionListener {
 		}
 
 		if (instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
-			JOptionPane.showMessageDialog(null, "Instruction");
+			JOptionPane.showMessageDialog(null, " Welcome to Whale Tower Defense (without the whales right now)."
+					+ "\n Your goal is to kill those yellow squares coming through the path using towers."
+					+ "\n"
+					+ "\n Click on an empty gray space and select one of the buttons that pops up to build a tower."
+					+ "\n Green towers shoot at a fast rate but deal low damage."
+					+ "\n Blue towers shoot at a medium rate and deal medium damage."
+					+ "\n Pink towers shoot at a slow rate but deal large damage."
+					+ "\n"
+					+ "\n You need 50 gold to build a tower."
+					+ "\n You gain gold passively over time, but also by killing enemies."
+					+ "\n"
+					+ "\n Don't run out of lives or you lose and the screen will close.");
 		}
 	}
 

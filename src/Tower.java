@@ -49,7 +49,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerType = "arrow";
 				buyTower();
 				ObjectManager.money-=50;
-				this.shootTimer = new Timer(500, this);
+				this.shootTimer = new Timer(750, this);
 				shootTimer.start();
 				return true;
 			}
@@ -121,9 +121,29 @@ public class Tower extends GameObject implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (isActive == true) {
-			Enemy target = ObjectManager.getClosestEnemy(x + (width / 2) - 5, y + (height / 2) - 5, 350);
+			Enemy target = ObjectManager.getClosestEnemy(x + (width / 2) - 5, y + (height / 2) - 5, 200);
 			if (target != ObjectManager.fake) {
-				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10,(target.x), (target.y), 5, 250, this.towerType));
+				double targetX = target.x;
+				double targetY = target.y;
+				int targetDirection = target.getDirection();
+				
+				if(targetDirection == 1) {
+					targetY -= 45*target.getSpeed();
+				}
+				
+				if(targetDirection == 2) {
+					targetX += 45*target.getSpeed();
+				}
+				
+				if(targetDirection == 3) {
+					targetY += 45*target.getSpeed();
+				}
+				
+				if(targetDirection == 4) {
+					targetX -= 45*target.getSpeed();
+				}
+				
+				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX, targetY, 5, 200, this.towerType));
 			}
 		}
 	}
