@@ -10,12 +10,15 @@ public class Enemy extends GameObject{
 	
 	Rectangle enemy;
 	int targetIndex = 0;
-	int health = 100;
+	int health;
 	int speed = 1;
 	int moveDirection;
+	String type;
 	
-	Enemy(int x, int y, int width, int height){
+	Enemy(int x, int y, int width, int height, String type, int health){
 		super(x, y, width, height);
+		this.type = type;
+		this.health = health;
 		targetNext();
 	}
 	public void reduceHealth() {
@@ -32,11 +35,21 @@ public class Enemy extends GameObject{
 	
 	public void draw(Graphics g) {
 		// Drawing Tower Spaces
-		g.setColor(Color.YELLOW);
-		g.fillRect((int)x, (int)y, width, height);
-		g.fillRect((int)x, (int)y - 20, 50, 10);
-		g.setColor(Color.BLACK);
-		g.fillRect((int)x+(health/2), (int)y-20, 50-(health/2), 10);
+		
+		if(type.equals("eraser")) {
+			g.setColor(Color.YELLOW);
+			g.fillRect((int)x, (int)y, width, height);
+			g.fillRect((int)x, (int)y - 20, 50, 10);
+			g.setColor(Color.BLACK);
+			g.fillRect((int)x+(health/2), (int)y-20, 50-(health/2), 10);
+		}
+		else if(type.equals("trashcan")) {
+			g.setColor(Color.BLUE);
+			g.fillRect((int)x, (int)y, width, height);
+			g.fillRect((int)x, (int)y - 20, 50, 10);
+			g.setColor(Color.BLACK);
+			g.fillRect((int)x+(health/5), (int)y-20, 50-(health/5), 10);
+		}
 	}
 	
 	public void update() {

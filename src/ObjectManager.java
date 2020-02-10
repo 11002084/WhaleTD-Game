@@ -14,7 +14,8 @@ import javax.swing.Timer;
 //I'd like to speak to your manager
 
 public class ObjectManager implements MouseListener, ActionListener {
-	int spawnDelay = 1000;
+	int spawnDelayEraser = 1000;
+	int spawnDelayTrashcan = 4500;
 	int spawnCounter = 0;
 	int totalTime = 0;
 	int reduceAmount;
@@ -42,10 +43,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 		initTowers();
 		initPaths();
 		initEnemies();
-		fake = new Enemy(-69, -420, 0, 0);
+		fake = new Enemy(-69, -420, 0, 0, "eraser", 100);
 		enemyTimer.start();
 		moneyTimer.start();
-		
+
 	}
 
 	public static double calcDist(double x, double x2, double y, double y2) {
@@ -155,7 +156,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	}
 
 	void initEnemies() {
-		enemyList.add(new Enemy(-40, 185, 50, 50));
+		enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 100));
 	}
 
 	public static void addProjectile(Projectile projectile) {
@@ -180,14 +181,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		checkCollision();
 		checkHealth();
-		//checkLives();
+		// checkLives();
 		purgeObjects();
 		GamePanel.setMoneyLabel(money + " Gold  ");
 		GamePanel.setLivesLabel(numLives + " Lives");
 	}
-	
+
 	void checkLives() {
-		if(numLives <= 0) {
+		if (numLives <= 0) {
 			System.exit(0);
 		}
 	}
@@ -230,8 +231,15 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
+				if(enemyList.get(i).type.equals("eraser")) {
+					money += 10;
+				}
+				
+				else if(enemyList.get(i).type.equals("trashcan")) {
+					money += 40;
+				}
+				
 				enemyList.remove(i);
-				money += 10;
 			}
 		}
 	}
@@ -296,16 +304,13 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		if (instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
 			JOptionPane.showMessageDialog(null, " Welcome to Whale Tower Defense (without the whales right now)."
-					+ "\n Your goal is to kill those yellow squares coming through the path using towers."
-					+ "\n"
+					+ "\n Your goal is to kill those yellow squares coming through the path using towers." + "\n"
 					+ "\n Click on an empty gray space and select one of the buttons that pops up to build a tower."
 					+ "\n Green towers shoot at a fast rate but deal low damage."
 					+ "\n Blue towers shoot at a medium rate and deal medium damage."
-					+ "\n Pink towers shoot at a slow rate but deal large damage."
-					+ "\n"
+					+ "\n Pink towers shoot at a slow rate but deal large damage." + "\n"
 					+ "\n You need 50 gold to build a tower."
-					+ "\n You gain gold passively over time, but also by killing enemies."
-					+ "\n"
+					+ "\n You gain gold passively over time, but also by killing enemies." + "\n"
 					+ "\n Don't run out of lives or you lose and the screen will close.");
 		}
 	}
@@ -328,19 +333,22 @@ public class ObjectManager implements MouseListener, ActionListener {
 		if (e.getSource() == enemyTimer) {
 			spawnCounter += 1;
 			totalTime += 10;
-			if (spawnCounter == spawnDelay) {
-				spawnCounter = 0;
-				addEnemy(new Enemy(-40, 185, 50, 50));
+			
+			if (spawnCounter % spawnDelayEraser == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 100));
 			}
-			if (spawnDelay > 10) {
-				if (totalTime % 20000 == 0) {
-					spawnDelay -= 10;
-					spawnCounter = spawnDelay - 1;
-				}
+			
+			if (spawnCounter % spawnDelayTrashcan == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", 250));
+			}
+			
+			if (spawnDelayEraser > 10 && spawnDelayTrashcan > 10 && totalTime % 20000 == 0) {
+				spawnDelayEraser -= 50;
+				spawnDelayTrashcan -= 50;
 			}
 		}
-		
-		if(e.getSource() == moneyTimer) {
+
+		if (e.getSource() == moneyTimer) {
 			money++;
 		}
 	}
