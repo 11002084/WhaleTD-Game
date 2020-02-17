@@ -27,6 +27,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static Rectangle button1;
 	public static Rectangle button2;
 	public static Rectangle button3;
+	public static Rectangle button4;
 	public static Rectangle instructionButton;
 
 	// Arraylist of Path Objects
@@ -36,9 +37,6 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 
 	ObjectManager() {
-		button1 = new Rectangle(200, 245, 200, 200);
-		button2 = new Rectangle(650, 245, 200, 200);
-		button3 = new Rectangle(1100, 245, 200, 200);
 		instructionButton = new Rectangle(1000, 10, 100, 100);
 		initTowers();
 		initPaths();
@@ -267,6 +265,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		g.setColor(Color.RED);
 		g.fillRect(instructionButton.x, instructionButton.y, instructionButton.width, instructionButton.height / 2);
+		g.setColor(Color.BLACK);
+		g.drawString("Click Me For", 1005, 25);
+		g.drawString("Instuctions", 1005, 50);
 	}
 
 	public static void disableMenus(Tower tower) {
@@ -298,7 +299,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < towerList.size(); i++) {
 			if (towerList.get(i).isClicked(e.getX(), e.getY()) == true) {
-				// This is important for some reason
+				button1 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y, 50, 50);
+				button2 = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y, 50, 50);
+				button3 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 50, 50);
+				button4 = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y+50, 50, 50);
 			}
 		}
 

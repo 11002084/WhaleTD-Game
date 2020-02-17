@@ -41,36 +41,41 @@ public class Tower extends GameObject implements ActionListener {
 	}
 
 	boolean isClicked(double mouseX, double mouseY) {
-		Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY, 1, 1);
-		if (menu == true && ObjectManager.money >= 50) {
-			if (mouse.intersects(ObjectManager.button1)) {
+		Rectangle mouse = new Rectangle((int) mouseX-15, (int) mouseY-20, 1, 1);
+		if (menu == true) {
+			if (mouse.intersects(ObjectManager.button1) && ObjectManager.money >= 50) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "arrow";
 				buyTower();
-				ObjectManager.money-=50;
+				ObjectManager.money -= 50;
 				this.shootTimer = new Timer(750, this);
 				shootTimer.start();
 				return true;
 			}
-			if (mouse.intersects(ObjectManager.button2)) {
+			if (mouse.intersects(ObjectManager.button2) && ObjectManager.money >= 50) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "rifle";
 				buyTower();
-				ObjectManager.money-=50;
+				ObjectManager.money -= 50;
 				this.shootTimer = new Timer(1500, this);
 				shootTimer.start();
 				return true;
 			}
-			if (mouse.intersects(ObjectManager.button3)) {
+			if (mouse.intersects(ObjectManager.button3) && ObjectManager.money >= 50) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "cannon";
 				buyTower();
-				ObjectManager.money-=50;
+				ObjectManager.money -= 50;
 				this.shootTimer = new Timer(3000, this);
 				shootTimer.start();
+				return true;
+			}
+			if (mouse.intersects(ObjectManager.button4)) {
+				ObjectManager.disableMenus(this);
+				menu = !menu;
 				return true;
 			} else {
 				return false;
@@ -89,15 +94,13 @@ public class Tower extends GameObject implements ActionListener {
 	void drawMenu(Graphics g) {
 		if (menu == true) {
 			g.setColor(Color.GREEN);
-			g.fillRect(ObjectManager.button1.x, ObjectManager.button1.y, ObjectManager.button1.width,ObjectManager.button1.height);
+			g.fillRect((int)x, (int)y, 50, 50);
 			g.setColor(Color.CYAN);
-			g.fillRect(ObjectManager.button2.x, ObjectManager.button2.y, ObjectManager.button2.width,ObjectManager.button2.height);
+			g.fillRect((int)x+50, (int)y, 50, 50);
 			g.setColor(Color.PINK);
-			g.fillRect(ObjectManager.button3.x, ObjectManager.button3.y, ObjectManager.button3.width,ObjectManager.button3.height);
+			g.fillRect((int)x, (int)y+50, 50, 50);
 			g.setColor(Color.BLACK);
-			g.drawRect(ObjectManager.button1.x, ObjectManager.button1.y, ObjectManager.button1.width,ObjectManager.button1.height);
-			g.drawRect(ObjectManager.button2.x, ObjectManager.button2.y, ObjectManager.button2.width,ObjectManager.button2.height);
-			g.drawRect(ObjectManager.button3.x, ObjectManager.button3.y, ObjectManager.button3.width,ObjectManager.button3.height);
+			g.fillRect((int)x+50, (int)y+50, 50, 50);
 		}
 	}
 
@@ -126,24 +129,25 @@ public class Tower extends GameObject implements ActionListener {
 				double targetX = target.x;
 				double targetY = target.y;
 				int targetDirection = target.getDirection();
-				
-				if(targetDirection == 1) {
-					targetY -= 45*target.getSpeed();
+
+				if (targetDirection == 1) {
+					targetY -= 45 * target.getSpeed();
 				}
-				
-				if(targetDirection == 2) {
-					targetX += 45*target.getSpeed();
+
+				if (targetDirection == 2) {
+					targetX += 45 * target.getSpeed();
 				}
-				
-				if(targetDirection == 3) {
-					targetY += 45*target.getSpeed();
+
+				if (targetDirection == 3) {
+					targetY += 45 * target.getSpeed();
 				}
-				
-				if(targetDirection == 4) {
-					targetX -= 45*target.getSpeed();
+
+				if (targetDirection == 4) {
+					targetX -= 45 * target.getSpeed();
 				}
-				
-				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX, targetY, 5, 200, this.towerType));
+
+				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX,
+						targetY, 5, 200, this.towerType));
 			}
 		}
 	}
