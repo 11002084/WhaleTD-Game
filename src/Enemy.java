@@ -36,19 +36,26 @@ public class Enemy extends GameObject{
 	public void draw(Graphics g) {
 		// Drawing Tower Spaces
 		
-		if(type.equals("eraser")) {
+		if(type.equals("towel")) {
 			g.setColor(Color.YELLOW);
 			g.fillRect((int)x, (int)y, width, height);
 			g.fillRect((int)x, (int)y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int)x+(health/2), (int)y-20, 50-(health/2), 10);
 		}
-		else if(type.equals("trashcan")) {
+		else if(type.equals("eraser")) {
 			g.setColor(Color.BLUE);
 			g.fillRect((int)x, (int)y, width, height);
 			g.fillRect((int)x, (int)y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int)x+(health/5), (int)y-20, 50-(health/5), 10);
+		}
+		else if(type.equals("spray")) {
+			g.setColor(Color.BLACK);
+			g.fillRect((int)x, (int)y, width, height);
+			g.fillRect((int)x, (int)y - 20, 50, 10);
+			g.setColor(Color.BLACK);
+			g.fillRect((int)x+(health/10), (int)y-20, 50-(health/5), 10);
 		}
 	}
 	

@@ -14,8 +14,9 @@ import javax.swing.Timer;
 //I'd like to speak to your manager
 
 public class ObjectManager implements MouseListener, ActionListener {
-	int spawnDelayEraser = 1000;
-	int spawnDelayTrashcan = 4500;
+	int spawnDelayTowel = 1000;
+	int spawnDelayEraser = 4500;
+	int spawnDelaySpray = 10000;
 	int spawnCounter = 0;
 	int totalTime = 0;
 	int reduceAmount;
@@ -23,11 +24,13 @@ public class ObjectManager implements MouseListener, ActionListener {
 	Timer enemyTimer = new Timer(10, this);
 	Timer moneyTimer = new Timer(1000, this);
 	public static Enemy fake;
-	static int money = 100;
-	public static Rectangle button1;
-	public static Rectangle button2;
-	public static Rectangle button3;
-	public static Rectangle button4;
+	static int money = 150;
+	public static Rectangle arrowButton;
+	public static Rectangle rifleButton;
+	public static Rectangle cannonButton;
+	public static Rectangle exitButton1;
+	public static Rectangle upgradeButton;
+	public static Rectangle exitButton2;
 	public static Rectangle instructionButton;
 
 	// Arraylist of Path Objects
@@ -154,7 +157,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	}
 
 	void initEnemies() {
-		enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 100));
+		enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 100));
 	}
 
 	public static void addProjectile(Projectile projectile) {
@@ -229,12 +232,16 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
-				if(enemyList.get(i).type.equals("eraser")) {
-					money += 10;
+				if(enemyList.get(i).type.equals("towel")) {
+					money += 20;
 				}
 				
-				else if(enemyList.get(i).type.equals("trashcan")) {
-					money += 40;
+				else if(enemyList.get(i).type.equals("eraser")) {
+					money += 50;
+				}
+				
+				else if(enemyList.get(i).type.equals("spray")) {
+					money += 200;
 				}
 				
 				enemyList.remove(i);
@@ -299,21 +306,26 @@ public class ObjectManager implements MouseListener, ActionListener {
 		// TODO Auto-generated method stub
 		for (int i = 0; i < towerList.size(); i++) {
 			if (towerList.get(i).isClicked(e.getX(), e.getY()) == true) {
-				button1 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y, 50, 50);
-				button2 = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y, 50, 50);
-				button3 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 50, 50);
-				button4 = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y+50, 50, 50);
+				arrowButton = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y, 50, 50);
+				rifleButton = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y, 50, 50);
+				cannonButton = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 50, 50);
+				exitButton1 = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y+50, 50, 50);
+				upgradeButton = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 100, 50);
+				exitButton2 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+100, 100, 50);
 			}
 		}
 
 		if (instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
 			JOptionPane.showMessageDialog(null, " Welcome to Whale Tower Defense (without the whales right now)."
-					+ "\n Your goal is to kill those yellow squares coming through the path using towers." + "\n"
-					+ "\n Click on an empty gray space and select one of the buttons that pops up to build a tower."
-					+ "\n Green towers shoot at a fast rate but deal low damage."
-					+ "\n Blue towers shoot at a medium rate and deal medium damage."
-					+ "\n Pink towers shoot at a slow rate but deal large damage." + "\n"
-					+ "\n You need 50 gold to build a tower."
+					+ "\n Your goal is to kill those squares coming through the path using towers." + "\n"
+					+ "\n Click on an empty gray space and select one of the colored buttons that pops up to build a tower."
+					+ "\n Green buttons build green towers, which shoot at a fast rate but deal low damage."
+					+ "\n Blue buttons build blue towers, which shoot at a medium rate and deal medium damage."
+					+ "\n Pink buttons build pink towers, which shoot at a slow rate but deal large damage."
+					+ "\n If you accidentally clicked an empty gray space, you can click the black button to close the build menu." + "\n"
+					+ "\n You need 40 gold to build a green tower."
+					+ "\n You need 60 gold to build a blue tower."
+					+ "\n You need 75 gold to build a pink tower."
 					+ "\n You gain gold passively over time, but also by killing enemies." + "\n"
 					+ "\n Don't run out of lives or you lose and the screen will close.");
 		}
@@ -338,17 +350,22 @@ public class ObjectManager implements MouseListener, ActionListener {
 			spawnCounter += 1;
 			totalTime += 10;
 			
+			if (spawnCounter % spawnDelayTowel == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 100));
+			}
+			
 			if (spawnCounter % spawnDelayEraser == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 100));
+				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 250));
 			}
 			
-			if (spawnCounter % spawnDelayTrashcan == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", 250));
+			if(spawnCounter % spawnDelaySpray == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", 500));
 			}
 			
-			if (spawnDelayEraser > 10 && spawnDelayTrashcan > 10 && totalTime % 20000 == 0) {
-				spawnDelayEraser -= 50;
-				spawnDelayTrashcan -= 50;
+			if (spawnDelayTowel > 10 && spawnDelayEraser > 10 && spawnDelaySpray > 10 && totalTime % 20000 == 0) {
+				spawnDelayTowel -= 50;
+				spawnDelayEraser -= 100;
+				spawnDelaySpray -=200;
 			}
 		}
 
