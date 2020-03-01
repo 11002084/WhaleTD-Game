@@ -12,9 +12,10 @@ public class Projectile extends GameObject{
 	double originX;
 	double originY;
 	String type;
+	int level;
 	
 	// Constructor :)
-	Projectile(double originX, double originY, int width, int height, double targetX, double targetY, double speed, double maxRange, String type) {
+	Projectile(double originX, double originY, int width, int height, double targetX, double targetY, double speed, double maxRange, String type, int level) {
 		super(originX, originY, width, height);
 		this.targetX = targetX;
 		this.targetY = targetY;
@@ -28,6 +29,7 @@ public class Projectile extends GameObject{
 		this.speedY = (diffY/mag)*speed;
 		this.maxRange = maxRange;
 		this.type = type;
+		this.level = level;
 	}
 	
 	

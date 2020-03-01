@@ -21,8 +21,16 @@ public class Enemy extends GameObject{
 		this.health = health;
 		targetNext();
 	}
-	public void reduceHealth() {
-		health-=5;
+	public void reduceHealth(String projectileType, int projectileTowerLevel) {
+		if(projectileType.equals("arrow")) {
+			health-=projectileTowerLevel*10;
+		}
+		else if(projectileType.equals("rifle")) {
+			health-=10+(projectileTowerLevel*15);
+		}
+		else if(projectileType.equals("cannon")) {
+			health-=20+(projectileTowerLevel*30);
+		}
 	}
 	
 	int getDirection() {
@@ -46,6 +54,7 @@ public class Enemy extends GameObject{
 		else if(type.equals("eraser")) {
 			g.setColor(Color.BLUE);
 			g.fillRect((int)x, (int)y, width, height);
+			g.setColor(Color.YELLOW);
 			g.fillRect((int)x, (int)y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int)x+(health/5), (int)y-20, 50-(health/5), 10);
@@ -53,6 +62,7 @@ public class Enemy extends GameObject{
 		else if(type.equals("spray")) {
 			g.setColor(Color.BLACK);
 			g.fillRect((int)x, (int)y, width, height);
+			g.setColor(Color.YELLOW);
 			g.fillRect((int)x, (int)y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int)x+(health/10), (int)y-20, 50-(health/5), 10);

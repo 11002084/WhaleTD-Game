@@ -41,8 +41,8 @@ public class Tower extends GameObject implements ActionListener {
 	}
 
 	boolean isClicked(double mouseX, double mouseY) {
-		Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY-25, 1, 1);
-		if (menu == true && towerType == null) {
+		Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY - 25, 1, 1);
+		if (menu == true && towerLevel == 0) {
 			if (mouse.intersects(ObjectManager.arrowButton) && ObjectManager.money >= 40) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
@@ -80,28 +80,35 @@ public class Tower extends GameObject implements ActionListener {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				return true;
-			} else {
-				return false;
 			}
 		}
-		
-		else if(menu == true && towerType == "arrow") {
-			if(mouse.intersects(ObjectManager.upgradeButton)) {
-				towerLevel++;
-				return true;
-			}
-		}
-		
-		else if(menu == true && towerType == "rifle") {
-			if(mouse.intersects(ObjectManager.upgradeButton)) {
-				towerLevel++;
-				return true;
-			}
-		}
-		
-		else if(menu == true && towerType == "cannon") {
-			if(mouse.intersects(ObjectManager.upgradeButton)) {
-				towerLevel++;
+
+		else if (menu == true && towerLevel > 0) {
+			if (mouse.intersects(ObjectManager.upgradeButton)) {
+				if (towerType == "arrow" && ObjectManager.money >= towerLevel*60) {
+					ObjectManager.money -= towerLevel*60;
+					towerLevel++;
+					ObjectManager.disableMenus(this);
+					menu = !menu;
+					return true;
+				}
+				else if (towerType == "rifle" && ObjectManager.money >= towerLevel*100) {
+					ObjectManager.money -= towerLevel*100;
+					towerLevel++;
+					ObjectManager.disableMenus(this);
+					menu = !menu;
+					return true;
+				}
+				else if (towerType == "cannon" && ObjectManager.money >= towerLevel*130) {
+					ObjectManager.money -= towerLevel*130;
+					towerLevel++;
+					ObjectManager.disableMenus(this);
+					menu = !menu;
+					return true;
+				}
+			} else if (mouse.intersects(ObjectManager.exitButton2)) {
+				ObjectManager.disableMenus(this);
+				menu = !menu;
 				return true;
 			}
 		}
@@ -113,50 +120,51 @@ public class Tower extends GameObject implements ActionListener {
 		} else {
 			return false;
 		}
+		return false;
 	}
 
 	void drawMenu(Graphics g) {
-		if(menu == true && towerType == "arrow") {
+		if (menu == true && towerType == "arrow") {
 			g.setColor(Color.GREEN);
-			g.fillRect((int)x, (int)y, 100, 50);
+			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade", (int)x, (int)y+45);
-			g.fillRect((int)x, (int)y+50, 100, 50);
+			g.drawString("Upgrade "+ towerLevel*60, (int) x, (int) y + 45);
+			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
-			g.drawString("<-", (int)x, (int)y+95);
-		}
-		else if(menu == true && towerType == "rifle") {
+			g.drawString("<-", (int) x, (int) y + 95);
+		} else if (menu == true && towerType == "rifle") {
 			g.setColor(Color.CYAN);
-			g.fillRect((int)x, (int)y, 100, 50);
+			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade", (int)x, (int)y+45);
-			g.fillRect((int)x, (int)y+50, 100, 50);
+			g.drawString("Upgrade "+ towerLevel*100, (int) x, (int) y + 45);
+			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
-			g.drawString("<-", (int)x, (int)y+95);
-		}
-		else if(menu == true && towerType == "cannon") {
+			g.drawString("<-", (int) x, (int) y + 95);
+		} else if (menu == true && towerType == "cannon") {
 			g.setColor(Color.PINK);
-			g.fillRect((int)x, (int)y, 100, 50);
+			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade", (int)x, (int)y+45);
-			g.fillRect((int)x, (int)y+50, 100, 50);
+			g.drawString("Upgrade "+ towerLevel*130, (int) x, (int) y + 45);
+			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
-			g.drawString("<-", (int)x, (int)y+95);
-		}
-		else if (menu == true && towerType == null) {
+			g.drawString("<-", (int) x, (int) y + 95);
+		} else if (menu == true && towerType == null) {
 			g.setColor(Color.GREEN);
-			g.fillRect((int)x, (int)y, 50, 50);
+			g.fillRect((int) x, (int) y, 50, 50);
 			g.setColor(Color.CYAN);
-			g.fillRect((int)x+50, (int)y, 50, 50);
+			g.fillRect((int) x + 50, (int) y, 50, 50);
 			g.setColor(Color.PINK);
-			g.fillRect((int)x, (int)y+50, 50, 50);
+			g.fillRect((int) x, (int) y + 50, 50, 50);
 			g.setColor(Color.BLACK);
-			g.fillRect((int)x+50, (int)y+50, 50, 50);
-			g.drawString("40", (int)x, (int)y+45);
-			g.drawString("60", (int)x+50, (int)y+45);
-			g.drawString("75", (int)x, (int)y+95);
+			g.fillRect((int) x + 50, (int) y + 50, 50, 50);
+			g.drawString("40", (int) x, (int) y + 45);
+			g.drawString("60", (int) x + 50, (int) y + 45);
+			g.drawString("75", (int) x, (int) y + 95);
 			g.setColor(Color.WHITE);
-			g.drawString("<-", (int)x+50, (int)y+95);
+			g.drawString("<-", (int) x + 50, (int) y + 95);
+		} else if (menu == false && towerLevel > 0) {
+			g.setColor(Color.BLACK);
+			g.drawString("" + towerLevel, (int) x + 45, (int) y + 55);
 		}
 	}
 
@@ -203,7 +211,7 @@ public class Tower extends GameObject implements ActionListener {
 				}
 
 				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX,
-						targetY, 5, 200, this.towerType));
+						targetY, 5, 200, this.towerType, this.towerLevel));
 			}
 		}
 	}

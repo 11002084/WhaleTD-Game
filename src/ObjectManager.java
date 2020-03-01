@@ -198,17 +198,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < enemyList.size(); i++) {
 			for (int j = 0; j < projectileList.size(); j++) {
 				if (projectileList.get(j).collisionBox.intersects(enemyList.get(i).collisionBox)) {
-					if (projectileList.get(j).type.equals("arrow")) {
-						reduceAmount = 2;
-					} else if (projectileList.get(j).type.equals("rifle")) {
-						reduceAmount = 5;
-					} else if (projectileList.get(j).type.equals("cannon")) {
-						reduceAmount = 10;
-					}
-
-					for (int k = 0; k < reduceAmount; k++) {
-						enemyList.get(i).reduceHealth();
-					}
+					enemyList.get(i).reduceHealth(projectileList.get(j).type, projectileList.get(j).level);
 					projectileList.get(j).isAlive = false;
 				}
 			}
@@ -310,8 +300,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 				rifleButton = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y, 50, 50);
 				cannonButton = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 50, 50);
 				exitButton1 = new Rectangle((int)towerList.get(i).x+50, (int)towerList.get(i).y+50, 50, 50);
-				upgradeButton = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 100, 50);
-				exitButton2 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+100, 100, 50);
+				upgradeButton = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y, 100, 50);
+				exitButton2 = new Rectangle((int)towerList.get(i).x, (int)towerList.get(i).y+50, 100, 50);
 			}
 		}
 
