@@ -50,7 +50,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerLevel = 1;
 				buyTower();
 				ObjectManager.money -= 40;
-				this.shootTimer = new Timer(750, this);
+				this.shootTimer = new Timer(350, this);
 				shootTimer.start();
 				return true;
 			}
@@ -61,7 +61,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerLevel = 1;
 				buyTower();
 				ObjectManager.money -= 50;
-				this.shootTimer = new Timer(1500, this);
+				this.shootTimer = new Timer(1000, this);
 				shootTimer.start();
 				return true;
 			}
@@ -72,7 +72,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerLevel = 1;
 				buyTower();
 				ObjectManager.money -= 50;
-				this.shootTimer = new Timer(3000, this);
+				this.shootTimer = new Timer(2500, this);
 				shootTimer.start();
 				return true;
 			}

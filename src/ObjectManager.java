@@ -15,8 +15,9 @@ import javax.swing.Timer;
 
 public class ObjectManager implements MouseListener, ActionListener {
 	int spawnDelayTowel = 1000;
-	int spawnDelayEraser = 4500;
-	int spawnDelaySpray = 10000;
+	int spawnDelayEraser = 2000;
+	int spawnDelaySpray = 5000;
+	int spawnDelayTrashcan = 10000;
 	int spawnCounter = 0;
 	int totalTime = 0;
 	int reduceAmount;
@@ -24,7 +25,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	Timer enemyTimer = new Timer(10, this);
 	Timer moneyTimer = new Timer(1000, this);
 	public static Enemy fake;
-	static int money = 150;
+	static int money = 100;
 	public static Rectangle arrowButton;
 	public static Rectangle rifleButton;
 	public static Rectangle cannonButton;
@@ -44,7 +45,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		initTowers();
 		initPaths();
 		initEnemies();
-		fake = new Enemy(-69, -420, 0, 0, "eraser", 100);
+		fake = new Enemy(-69, -420, 0, 0, "eraser", 100, 2);
 		enemyTimer.start();
 		moneyTimer.start();
 
@@ -157,7 +158,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	}
 
 	void initEnemies() {
-		enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 100));
+		enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 0, 1));
 	}
 
 	public static void addProjectile(Projectile projectile) {
@@ -223,17 +224,20 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
 				if(enemyList.get(i).type.equals("towel")) {
-					money += 20;
+					money += 10;
 				}
 				
 				else if(enemyList.get(i).type.equals("eraser")) {
-					money += 50;
+					money += 25;
 				}
 				
 				else if(enemyList.get(i).type.equals("spray")) {
-					money += 200;
+					money += 50;
 				}
 				
+				else if(enemyList.get(i).type.equals("trashcan")) {
+					money += 100;
+				}
 				enemyList.remove(i);
 			}
 		}
@@ -340,22 +344,35 @@ public class ObjectManager implements MouseListener, ActionListener {
 			spawnCounter += 1;
 			totalTime += 10;
 			
-			if (spawnCounter % spawnDelayTowel == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 100));
+			if (totalTime > 5000 && spawnCounter % spawnDelayTowel == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 100, 1));
 			}
 			
-			if (spawnCounter % spawnDelayEraser == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 250));
+			if (totalTime > 25000 && spawnCounter % spawnDelayEraser == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 250, 1));
 			}
 			
-			if(spawnCounter % spawnDelaySpray == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", 500));
+			if(totalTime > 45000 && spawnCounter % spawnDelaySpray == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", 500, 1));
 			}
 			
-			if (spawnDelayTowel > 10 && spawnDelayEraser > 10 && spawnDelaySpray > 10 && totalTime % 20000 == 0) {
-				spawnDelayTowel -= 50;
-				spawnDelayEraser -= 100;
-				spawnDelaySpray -=200;
+			if(totalTime > 80000 && spawnCounter % spawnDelayTrashcan == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", 2000, 1));
+			}
+			
+			if (totalTime % 20000 == 0) {
+				if(spawnDelayTowel > 100) {
+					spawnDelayTowel -= 100;
+				}
+				if(spawnDelayTowel > 100) {
+					spawnDelayEraser -= 100;
+				}
+				if(spawnDelayTowel > 100) {
+					spawnDelaySpray -= 100;
+				}
+				if(spawnDelayTowel > 100) {
+					spawnDelayTrashcan -= 100;
+				}
 			}
 		}
 
