@@ -8,6 +8,7 @@ import javax.swing.Timer;
 
 public class Enemy extends GameObject {
 
+	//Main Enemy Variables
 	Rectangle enemy;
 	int targetIndex = 0;
 	int health;
@@ -15,6 +16,12 @@ public class Enemy extends GameObject {
 	int moveDirection;
 	String type;
 
+	//Tower Damage
+	int arrowDamageMultiplier = 5;
+	int rifleDamageMultiplier = 15;
+	int cannonDamageMultiplier = 30;
+	
+	//Enemy Constructor
 	Enemy(int x, int y, int width, int height, String type, int health, int speed) {
 		super(x, y, width, height);
 		this.type = type;
@@ -23,20 +30,23 @@ public class Enemy extends GameObject {
 		targetNext();
 	}
 
+	//Reduce Enemy Health based on Tower Level
 	public void reduceHealth(String projectileType, int projectileTowerLevel) {
 		if (projectileType.equals("arrow")) {
-			health -= projectileTowerLevel * 5;
+			health -= projectileTowerLevel * arrowDamageMultiplier;
 		} else if (projectileType.equals("rifle")) {
-			health -= 10 + (projectileTowerLevel * 15);
+			health -= 10 + (projectileTowerLevel * rifleDamageMultiplier);
 		} else if (projectileType.equals("cannon")) {
-			health -= 20 + (projectileTowerLevel * 30);
+			health -= 20 + (projectileTowerLevel * cannonDamageMultiplier);
 		}
 	}
 
+	//Return Enemy Direction
 	int getDirection() {
 		return moveDirection;
 	}
-
+	
+	//Return Enemy Speed
 	int getSpeed() {
 		return speed;
 	}

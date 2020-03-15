@@ -7,11 +7,20 @@ import javax.swing.Timer;
 
 public class Tower extends GameObject implements ActionListener {
 
+	//Main Tower Variables
 	boolean isActive;
 	boolean menu;
 	String towerType;
 	int towerLevel;
 	Timer shootTimer;
+	
+	//Tower Costs
+	int arrowConstructCost = 40;
+	int rifleConstructCost = 60;
+	int cannonConstructCost = 75;
+	int arrowUpgradeMultiplier = 60;
+	int rifleUpgradeMultiplier = 100;
+	int cannonUpgradeMultiplier = 130;
 
 	// Rectangle variable
 	Rectangle tower;
@@ -40,38 +49,39 @@ public class Tower extends GameObject implements ActionListener {
 		}
 	}
 
+	//Construct Towers on Empty Spaces
 	boolean isClicked(double mouseX, double mouseY) {
 		Rectangle mouse = new Rectangle((int) mouseX, (int) mouseY - 25, 1, 1);
 		if (menu == true && towerLevel == 0) {
-			if (mouse.intersects(ObjectManager.arrowButton) && ObjectManager.money >= 40) {
+			if (mouse.intersects(ObjectManager.arrowButton) && ObjectManager.money >= arrowConstructCost) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "arrow";
 				towerLevel = 1;
 				buyTower();
-				ObjectManager.money -= 40;
+				ObjectManager.money -= arrowConstructCost;
 				this.shootTimer = new Timer(350, this);
 				shootTimer.start();
 				return true;
 			}
-			if (mouse.intersects(ObjectManager.rifleButton) && ObjectManager.money >= 60) {
+			if (mouse.intersects(ObjectManager.rifleButton) && ObjectManager.money >= rifleConstructCost) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "rifle";
 				towerLevel = 1;
 				buyTower();
-				ObjectManager.money -= 50;
+				ObjectManager.money -= rifleConstructCost;
 				this.shootTimer = new Timer(1000, this);
 				shootTimer.start();
 				return true;
 			}
-			if (mouse.intersects(ObjectManager.cannonButton) && ObjectManager.money >= 75) {
+			if (mouse.intersects(ObjectManager.cannonButton) && ObjectManager.money >= cannonConstructCost) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
 				towerType = "cannon";
 				towerLevel = 1;
 				buyTower();
-				ObjectManager.money -= 50;
+				ObjectManager.money -= cannonConstructCost;
 				this.shootTimer = new Timer(2500, this);
 				shootTimer.start();
 				return true;
@@ -83,24 +93,25 @@ public class Tower extends GameObject implements ActionListener {
 			}
 		}
 
+		//Upgrade Tower Level
 		else if (menu == true && towerLevel > 0) {
 			if (mouse.intersects(ObjectManager.upgradeButton)) {
-				if (towerType == "arrow" && ObjectManager.money >= towerLevel*60) {
-					ObjectManager.money -= towerLevel*60;
+				if (towerType == "arrow" && ObjectManager.money >= towerLevel*arrowUpgradeMultiplier) {
+					ObjectManager.money -= towerLevel*arrowUpgradeMultiplier;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
 					return true;
 				}
-				else if (towerType == "rifle" && ObjectManager.money >= towerLevel*100) {
-					ObjectManager.money -= towerLevel*100;
+				else if (towerType == "rifle" && ObjectManager.money >= towerLevel*rifleUpgradeMultiplier) {
+					ObjectManager.money -= towerLevel*rifleUpgradeMultiplier;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
 					return true;
 				}
-				else if (towerType == "cannon" && ObjectManager.money >= towerLevel*130) {
-					ObjectManager.money -= towerLevel*130;
+				else if (towerType == "cannon" && ObjectManager.money >= towerLevel*cannonUpgradeMultiplier) {
+					ObjectManager.money -= towerLevel*cannonUpgradeMultiplier;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;

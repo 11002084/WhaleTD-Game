@@ -14,18 +14,46 @@ import javax.swing.Timer;
 //I'd like to speak to your manager
 
 public class ObjectManager implements MouseListener, ActionListener {
+	//Enemy Spawning Variables
+	int spawnStartTowel = 5000;
+	int spawnStartEraser = 25000;
+	int spawnStartSpray = 45000;
+	int spawnStartTrashcan = 80000;
 	int spawnDelayTowel = 1000;
 	int spawnDelayEraser = 2000;
 	int spawnDelaySpray = 5000;
 	int spawnDelayTrashcan = 10000;
+	
 	int spawnCounter = 0;
+	int minSpawnDelay = 100;
+	int spawnDelayReduction = 100;
+	int spawnDelayReductionDelay = 20000;
 	int totalTime = 0;
-	int reduceAmount;
-	static int numLives = 10;
 	Timer enemyTimer = new Timer(10, this);
-	Timer moneyTimer = new Timer(1000, this);
-	public static Enemy fake;
+	
+	//Other Enemy Variables
+	int towelMoney = 10;
+	int eraserMoney = 25;
+	int sprayMoney = 50;
+	int trashcanMoney = 200;
+	int towelHealth = 100;
+	int eraserHealth = 250;
+	int sprayHealth = 500;
+	int trashcanHealth = 2000;
+	/*Don't touch*/ int towelSpeed = 1;
+	/*Don't touch*/ int eraserSpeed = 1;
+	/*Don't touch*/ int spraySpeed = 1;
+	/*Don't touch*/ int trashcanSpeed = 1;
+	int reduceAmount;
+	
+	//Player Values
+	static int numLives = 10;
 	static int money = 100;
+	static int livesReduction = 1;
+	Timer moneyTimer = new Timer(1000, this);
+	
+	//Objects and Rectangles
+	public static Enemy fake;
 	public static Rectangle arrowButton;
 	public static Rectangle rifleButton;
 	public static Rectangle cannonButton;
@@ -40,6 +68,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
 	public static ArrayList<Projectile> projectileList = new ArrayList<Projectile>();
 
+	//ObjectManager Constructor
 	ObjectManager() {
 		instructionButton = new Rectangle(1000, 10, 100, 100);
 		initTowers();
@@ -51,10 +80,12 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	}
 
+	//Calculate Distance using Maths
 	public static double calcDist(double x, double x2, double y, double y2) {
 		return Math.sqrt(((x - x2) * (x - x2)) + ((y - y2) * (y - y2)));
 	}
 
+	//Calculate Distances and Get Closest Enemy
 	public static Enemy getClosestEnemy(double d, double e, double max) {
 		double shortestDistance = 10000;
 		int enemyIndex = -1;
@@ -157,14 +188,17 @@ public class ObjectManager implements MouseListener, ActionListener {
 		pathList.add(new Path(1360, -90, 100, 100));
 	}
 
+	//Initialize Enemies
 	void initEnemies() {
 		enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 0, 1));
 	}
 
+	//Initialize Projectiles
 	public static void addProjectile(Projectile projectile) {
 		projectileList.add(projectile);
 	}
 
+	//Add Enemy Object
 	public static void addEnemy(Enemy enemy) {
 		enemyList.add(enemy);
 	}
@@ -189,12 +223,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 		GamePanel.setLivesLabel(numLives + " Lives");
 	}
 
+	//Check Lives and Exit Game if Lives is 0
 	void checkLives() {
 		if (numLives <= 0) {
 			System.exit(0);
 		}
 	}
 
+	//Check if Projectile Is Touching Enemy
 	void checkCollision() {
 		for (int i = 0; i < enemyList.size(); i++) {
 			for (int j = 0; j < projectileList.size(); j++) {
@@ -206,6 +242,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		}
 	}
 
+	//Check the Health of Enemies
 	void checkHealth() {
 		for (int i = 0; i < enemyList.size(); i++) {
 			if (enemyList.get(i).health <= 0) {
@@ -214,6 +251,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		}
 	}
 
+	//Remove Projectiles and Enemies that Aren't Alive
 	void purgeObjects() {
 		for (int i = projectileList.size() - 1; i >= 0; i--) {
 			if (projectileList.get(i).isAlive == false) {
@@ -224,19 +262,19 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = enemyList.size() - 1; i >= 0; i--) {
 			if (enemyList.get(i).isAlive == false) {
 				if(enemyList.get(i).type.equals("towel")) {
-					money += 10;
+					money += towelMoney;
 				}
 				
 				else if(enemyList.get(i).type.equals("eraser")) {
-					money += 25;
+					money += eraserMoney;
 				}
 				
 				else if(enemyList.get(i).type.equals("spray")) {
-					money += 50;
+					money += sprayMoney;
 				}
 				
 				else if(enemyList.get(i).type.equals("trashcan")) {
-					money += 100;
+					money += trashcanMoney;
 				}
 				enemyList.remove(i);
 			}
@@ -271,6 +309,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		g.drawString("Instuctions", 1005, 50);
 	}
 
+	//Hide Tower Menus
 	public static void disableMenus(Tower tower) {
 		for (int i = 0; i < towerList.size(); i++) {
 			if (towerList.get(i) != tower) {
@@ -279,9 +318,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 		}
 	}
 
+	//Lose Life if Enemy Gets Past Gauntlet
 	public static void loseLives(Enemy enemy) {
 		enemyList.remove(enemy);
-		numLives -= 1;
+		numLives -= livesReduction;
 	}
 
 	@Override
@@ -344,34 +384,34 @@ public class ObjectManager implements MouseListener, ActionListener {
 			spawnCounter += 1;
 			totalTime += 10;
 			
-			if (totalTime > 5000 && spawnCounter % spawnDelayTowel == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", 100, 1));
+			if (totalTime > spawnStartTowel && spawnCounter % spawnDelayTowel == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", trashcanHealth, towelSpeed));
 			}
 			
-			if (totalTime > 25000 && spawnCounter % spawnDelayEraser == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", 250, 1));
+			if (totalTime > spawnStartEraser && spawnCounter % spawnDelayEraser == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", trashcanHealth, eraserSpeed));
 			}
 			
-			if(totalTime > 45000 && spawnCounter % spawnDelaySpray == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", 500, 1));
+			if(totalTime > spawnStartSpray && spawnCounter % spawnDelaySpray == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", trashcanHealth, spraySpeed));
 			}
 			
-			if(totalTime > 80000 && spawnCounter % spawnDelayTrashcan == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", 2000, 1));
+			if(totalTime > spawnStartTrashcan && spawnCounter % spawnDelayTrashcan == 0) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", trashcanHealth, trashcanSpeed));
 			}
 			
-			if (totalTime % 20000 == 0) {
-				if(spawnDelayTowel > 100) {
-					spawnDelayTowel -= 100;
+			if (totalTime % spawnDelayReductionDelay == 0) {
+				if(spawnDelayTowel > minSpawnDelay) {
+					spawnDelayTowel -= spawnDelayReduction;
 				}
-				if(spawnDelayTowel > 100) {
-					spawnDelayEraser -= 100;
+				if(spawnDelayTowel > minSpawnDelay) {
+					spawnDelayEraser -= spawnDelayReduction;
 				}
-				if(spawnDelayTowel > 100) {
-					spawnDelaySpray -= 100;
+				if(spawnDelayTowel > minSpawnDelay) {
+					spawnDelaySpray -= spawnDelayReduction;
 				}
-				if(spawnDelayTowel > 100) {
-					spawnDelayTrashcan -= 100;
+				if(spawnDelayTowel > minSpawnDelay) {
+					spawnDelayTrashcan -= spawnDelayReduction;
 				}
 			}
 		}
