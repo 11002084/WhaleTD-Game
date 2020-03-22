@@ -61,26 +61,33 @@ public class Enemy extends GameObject {
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + (health / 2), (int) y - 20, 50 - (health / 2), 10);
 		} else if (type.equals("eraser")) {
-			g.setColor(Color.BLUE);
+			g.setColor(Color.GREEN);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + (health / 5), (int) y - 20, 50 - (health / 5), 10);
 		} else if (type.equals("spray")) {
-			g.setColor(Color.DARK_GRAY);
+			g.setColor(Color.BLUE);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + (health / 10), (int) y - 20, 50 - (health / 10), 10);
 		} else if (type.equals("trashcan")) {
-			g.setColor(Color.BLACK);
+			g.setColor(Color.DARK_GRAY);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + (health / 40), (int) y - 20, 50 - (health / 40), 10);
+		} else if (type.equals("annihilator")) {
+			g.setColor(Color.BLACK);
+			g.fillRect((int) x, (int) y, width, height);
+			g.setColor(Color.YELLOW);
+			g.fillRect((int) x, (int) y - 20, 50, 10);
+			g.setColor(Color.BLACK);
+			g.fillRect((int) x + (health / 200), (int) y - 20, 50 - (health / 200), 10);
 		}
 	}
 

@@ -19,10 +19,12 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int spawnStartEraser = 25000;
 	int spawnStartSpray = 45000;
 	int spawnStartTrashcan = 80000;
+	int spawnStartTheAnnihilator = 180000;
 	int spawnDelayTowel = 1000;
 	int spawnDelayEraser = 2000;
 	int spawnDelaySpray = 5000;
 	int spawnDelayTrashcan = 10000;
+	boolean spawnedTheAnnihilator = false;
 	
 	int spawnCounter = 0;
 	int minSpawnDelay = 100;
@@ -36,14 +38,17 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int eraserMoney = 25;
 	int sprayMoney = 50;
 	int trashcanMoney = 200;
+	int theAnnihilatorMoney = 100000;
 	int towelHealth = 100;
 	int eraserHealth = 250;
 	int sprayHealth = 500;
 	int trashcanHealth = 2000;
+	int theAnnihilatorHealth = 10000;
 	/*Don't touch*/ int towelSpeed = 1;
 	/*Don't touch*/ int eraserSpeed = 1;
 	/*Don't touch*/ int spraySpeed = 1;
 	/*Don't touch*/ int trashcanSpeed = 1;
+	/*Don't touch*/ int theAnnihilatorSpeed = 1;
 	int reduceAmount;
 	
 	//Player Values
@@ -219,14 +224,12 @@ public class ObjectManager implements MouseListener, ActionListener {
 		checkHealth();
 		// checkLives();
 		purgeObjects();
-		GamePanel.setMoneyLabel(money + " Gold  ");
-		GamePanel.setLivesLabel(numLives + " Lives");
 	}
 
 	//Check Lives and Exit Game if Lives is 0
 	void checkLives() {
 		if (numLives <= 0) {
-			System.exit(0);
+			//System.exit(0);
 		}
 	}
 
@@ -283,6 +286,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// Draw Method
 	void draw(Graphics g) {
+		//Redrawing Background
+		g.setColor(Color.WHITE);
+		g.drawRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
+		
 		for (int i = 0; i < pathList.size(); i++) {
 			pathList.get(i).draw(g);
 		}
@@ -307,6 +314,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 		g.setColor(Color.BLACK);
 		g.drawString("Click Me For", 1005, 25);
 		g.drawString("Instuctions", 1005, 50);
+		g.drawString("Money: $" + money, 650, 50);
+		g.drawString("Lives: " + numLives, 800, 50);
 	}
 
 	//Hide Tower Menus
@@ -359,8 +368,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 					+ "\n If you accidentally clicked an empty gray space, you can click the black button to close the build menu." + "\n"
 					+ "\n You need 40 gold to build a green tower."
 					+ "\n You need 60 gold to build a blue tower."
-					+ "\n You need 75 gold to build a pink tower."
-					+ "\n You gain gold passively over time, but also by killing enemies." + "\n"
+					+ "\n You need 75 gold to build a pink tower." + "\n"
+					+ "\n After you build a tower, you can also upgrade it using gold if you select it again."
+					+ "\n Upgrading towers makes them deal more damage to enemies."
+					+ "\n Upgrading a tower become more expensive as the level of the tower increases." + "\n"
+					+ "\n You gain gold passively over time, but also by killing enemies."
 					+ "\n Don't run out of lives or you lose and the screen will close.");
 		}
 	}
@@ -398,6 +410,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 			
 			if(totalTime > spawnStartTrashcan && spawnCounter % spawnDelayTrashcan == 0) {
 				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", trashcanHealth, trashcanSpeed));
+			}
+			
+			if(totalTime > spawnStartTheAnnihilator && spawnedTheAnnihilator == false) {
+				enemyList.add(new Enemy(-40, 185, 50, 50, "annihilator", theAnnihilatorHealth, theAnnihilatorSpeed));
+				spawnedTheAnnihilator = true;
 			}
 			
 			if (totalTime % spawnDelayReductionDelay == 0) {

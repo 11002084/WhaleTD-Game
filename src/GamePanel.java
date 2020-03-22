@@ -21,14 +21,6 @@ public class GamePanel extends JPanel implements ActionListener {
 		add(labelMoney);
 		add(labelLives);
 	}
-	
-	static void setMoneyLabel(String moneyAmount) {
-		labelMoney.setText("<html><pre><font face=\"monaco\" size=\"20\">" + moneyAmount + "</font></pre></html>");
-	}
-	
-	static void setLivesLabel(String livesNumber) {
-		labelLives.setText("<html><pre><font face=\"monaco\" size=\"20\">" + livesNumber + "</font></pre></html>");
-	}
 
 	public void paintComponent(Graphics g) {
 		objectManager.draw(g);
