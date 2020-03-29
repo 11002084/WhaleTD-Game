@@ -221,8 +221,7 @@ public class Tower extends GameObject implements ActionListener {
 					targetX -= 45 * target.getSpeed();
 				}
 
-				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX,
-						targetY, 5, 200, this.towerType, this.towerLevel));
+				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX, targetY, 5, 200, towerType, towerLevel));
 			}
 		}
 	}

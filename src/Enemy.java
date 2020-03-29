@@ -12,7 +12,7 @@ public class Enemy extends GameObject {
 	Rectangle enemy;
 	int targetIndex = 0;
 	int health;
-	int speed;
+	double speed;
 	int moveDirection;
 	String type;
 
@@ -22,7 +22,7 @@ public class Enemy extends GameObject {
 	int cannonDamageMultiplier = 30;
 	
 	//Enemy Constructor
-	Enemy(int x, int y, int width, int height, String type, int health, int speed) {
+	Enemy(int x, int y, int width, int height, String type, int health, double speed) {
 		super(x, y, width, height);
 		this.type = type;
 		this.health = health;
@@ -47,7 +47,7 @@ public class Enemy extends GameObject {
 	}
 	
 	//Return Enemy Speed
-	int getSpeed() {
+	double getSpeed() {
 		return speed;
 	}
 

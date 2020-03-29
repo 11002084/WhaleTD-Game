@@ -16,19 +16,25 @@ import javax.swing.Timer;
 public class ObjectManager implements MouseListener, ActionListener {
 	//Enemy Spawning Variables
 	int spawnStartTowel = 5000;
-	int spawnStartEraser = 25000;
-	int spawnStartSpray = 45000;
-	int spawnStartTrashcan = 80000;
-	int spawnStartTheAnnihilator = 180000;
+	int spawnStartEraser = 30000;
+	int spawnStartSpray = 60000;
+	int spawnStartTrashcan = 120000;
+	int spawnStartTheAnnihilator = 300000;
 	int spawnDelayTowel = 1000;
 	int spawnDelayEraser = 2000;
 	int spawnDelaySpray = 5000;
 	int spawnDelayTrashcan = 10000;
 	boolean spawnedTheAnnihilator = false;
+	int spawnDelayReductionTowel = 100;
+	int spawnDelayReductionEraser = 200;
+	int spawnDelayReductionSpray = 500;
+	int spawnDelayReductionTrashcan = 1000;
+	int minSpawnDelayTowel = 100;
+	int minSpawnDelayEraser = 200;
+	int minSpawnDelaySpray = 500;
+	int minSpawnDelayTrashcan = 1000;
 	
 	int spawnCounter = 0;
-	int minSpawnDelay = 100;
-	int spawnDelayReduction = 100;
 	int spawnDelayReductionDelay = 20000;
 	int totalTime = 0;
 	Timer enemyTimer = new Timer(10, this);
@@ -42,13 +48,13 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int towelHealth = 100;
 	int eraserHealth = 250;
 	int sprayHealth = 500;
-	int trashcanHealth = 2000;
+	int trashcanHealth = 1500;
 	int theAnnihilatorHealth = 10000;
-	/*Don't touch*/ int towelSpeed = 1;
-	/*Don't touch*/ int eraserSpeed = 1;
-	/*Don't touch*/ int spraySpeed = 1;
-	/*Don't touch*/ int trashcanSpeed = 1;
-	/*Don't touch*/ int theAnnihilatorSpeed = 1;
+	double towelSpeed = 1;
+	double eraserSpeed = 1;
+	double spraySpeed = 1;
+	double trashcanSpeed = 1;
+	double theAnnihilatorSpeed = 1;
 	int reduceAmount;
 	
 	//Player Values
@@ -288,7 +294,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	void draw(Graphics g) {
 		//Redrawing Background
 		g.setColor(Color.WHITE);
-		g.drawRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
+		g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
 		
 		for (int i = 0; i < pathList.size(); i++) {
 			pathList.get(i).draw(g);
@@ -397,15 +403,15 @@ public class ObjectManager implements MouseListener, ActionListener {
 			totalTime += 10;
 			
 			if (totalTime > spawnStartTowel && spawnCounter % spawnDelayTowel == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", trashcanHealth, towelSpeed));
+				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", towelHealth, towelSpeed));
 			}
 			
 			if (totalTime > spawnStartEraser && spawnCounter % spawnDelayEraser == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", trashcanHealth, eraserSpeed));
+				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", eraserHealth, eraserSpeed));
 			}
 			
 			if(totalTime > spawnStartSpray && spawnCounter % spawnDelaySpray == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", trashcanHealth, spraySpeed));
+				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", sprayHealth, spraySpeed));
 			}
 			
 			if(totalTime > spawnStartTrashcan && spawnCounter % spawnDelayTrashcan == 0) {
@@ -418,17 +424,17 @@ public class ObjectManager implements MouseListener, ActionListener {
 			}
 			
 			if (totalTime % spawnDelayReductionDelay == 0) {
-				if(spawnDelayTowel > minSpawnDelay) {
-					spawnDelayTowel -= spawnDelayReduction;
+				if(totalTime > spawnStartTowel && spawnDelayTowel > minSpawnDelayTowel) {
+					spawnDelayTowel -= spawnDelayReductionTowel;
 				}
-				if(spawnDelayTowel > minSpawnDelay) {
-					spawnDelayEraser -= spawnDelayReduction;
+				if(totalTime > spawnStartEraser && spawnDelayEraser > minSpawnDelayEraser) {
+					spawnDelayEraser -= spawnDelayReductionEraser;
 				}
-				if(spawnDelayTowel > minSpawnDelay) {
-					spawnDelaySpray -= spawnDelayReduction;
+				if(totalTime > spawnStartSpray && spawnDelaySpray > minSpawnDelaySpray) {
+					spawnDelaySpray -= spawnDelayReductionSpray;
 				}
-				if(spawnDelayTowel > minSpawnDelay) {
-					spawnDelayTrashcan -= spawnDelayReduction;
+				if(totalTime > spawnStartTrashcan && spawnDelayTrashcan > minSpawnDelayTrashcan) {
+					spawnDelayTrashcan -= spawnDelayReductionTrashcan;
 				}
 			}
 		}
