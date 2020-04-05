@@ -21,6 +21,13 @@ public class Enemy extends GameObject {
 	int rifleDamageMultiplier = 15;
 	int cannonDamageMultiplier = 30;
 	
+	//Health Bars
+	int towelHealthbarValue;
+	int eraserHealthbarValue;
+	int sprayHealthbarValue;
+	int trashcanHealthbarValue;
+	int theAnnihilatorHealthbarValue;
+	
 	//Enemy Constructor
 	Enemy(int x, int y, int width, int height, String type, int health, double speed) {
 		super(x, y, width, height);
@@ -53,41 +60,47 @@ public class Enemy extends GameObject {
 
 	public void draw(Graphics g) {
 		// Drawing Tower Spaces
+		
+		towelHealthbarValue = health/(ObjectManager.towelHealth/50);
+		eraserHealthbarValue = health/(ObjectManager.eraserHealth/50);
+		sprayHealthbarValue = health/(ObjectManager.sprayHealth/50);
+		trashcanHealthbarValue = health/(ObjectManager.trashcanHealth/50);
+		theAnnihilatorHealthbarValue = health/(ObjectManager.theAnnihilatorHealth/50);
 
 		if (type.equals("towel")) {
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y, width, height);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x + (health / 2), (int) y - 20, 50 - (health / 2), 10);
+			g.fillRect((int) x + towelHealthbarValue, (int) y - 20, 50 - towelHealthbarValue, 10);
 		} else if (type.equals("eraser")) {
 			g.setColor(Color.GREEN);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x + (health / 5), (int) y - 20, 50 - (health / 5), 10);
+			g.fillRect((int) x + eraserHealthbarValue, (int) y - 20, 50 - eraserHealthbarValue, 10);
 		} else if (type.equals("spray")) {
 			g.setColor(Color.BLUE);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x + (health / 10), (int) y - 20, 50 - (health / 10), 10);
+			g.fillRect((int) x + sprayHealthbarValue, (int) y - 20, 50 - sprayHealthbarValue, 10);
 		} else if (type.equals("trashcan")) {
 			g.setColor(Color.DARK_GRAY);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x + (health / 40), (int) y - 20, 50 - (health / 40), 10);
+			g.fillRect((int) x + trashcanHealthbarValue, (int) y - 20, 50 - trashcanHealthbarValue, 10);
 		} else if (type.equals("annihilator")) {
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x, (int) y, width, height);
 			g.setColor(Color.YELLOW);
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
-			g.fillRect((int) x + (health / 200), (int) y - 20, 50 - (health / 200), 10);
+			g.fillRect((int) x + theAnnihilatorHealthbarValue, (int) y - 20, 50 - theAnnihilatorHealthbarValue, 10);
 		}
 	}
 

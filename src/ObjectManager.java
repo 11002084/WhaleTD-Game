@@ -24,7 +24,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int spawnDelayEraser = 2000;
 	int spawnDelaySpray = 5000;
 	int spawnDelayTrashcan = 10000;
-	boolean spawnedTheAnnihilator = false;
+	static boolean spawnedTheAnnihilator = false;
 	int spawnDelayReductionTowel = 100;
 	int spawnDelayReductionEraser = 200;
 	int spawnDelayReductionSpray = 500;
@@ -45,11 +45,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int sprayMoney = 50;
 	int trashcanMoney = 200;
 	int theAnnihilatorMoney = 100000;
-	int towelHealth = 100;
-	int eraserHealth = 250;
-	int sprayHealth = 500;
-	int trashcanHealth = 1500;
-	int theAnnihilatorHealth = 10000;
+	static int towelHealth = 100;
+	static int eraserHealth = 250;
+	static int sprayHealth = 500;
+	static int trashcanHealth = 1500;
+	static int theAnnihilatorHealth = 10000;
 	double towelSpeed = 1;
 	double eraserSpeed = 1;
 	double spraySpeed = 1;
@@ -58,7 +58,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int reduceAmount;
 	
 	//Player Values
-	static int numLives = 10;
+	static int numLives = 1000000;
 	static int money = 100;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
@@ -338,7 +338,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 		enemyList.remove(enemy);
 		numLives -= livesReduction;
 	}
-
+	
+	public static void theAnnihilatorProtocol()
+	{
+			enemyList.removeAll(enemyList);
+	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
 
@@ -398,7 +402,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		if (e.getSource() == enemyTimer) {
+		if (e.getSource() == enemyTimer && spawnedTheAnnihilator == false) {
 			spawnCounter += 1;
 			totalTime += 10;
 			
@@ -419,6 +423,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 			}
 			
 			if(totalTime > spawnStartTheAnnihilator && spawnedTheAnnihilator == false) {
+				theAnnihilatorProtocol();
 				enemyList.add(new Enemy(-40, 185, 50, 50, "annihilator", theAnnihilatorHealth, theAnnihilatorSpeed));
 				spawnedTheAnnihilator = true;
 			}
