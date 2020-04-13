@@ -84,7 +84,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// ObjectManager Constructor
 	ObjectManager() {
-		while (gameStarted == false) {
+		if (gameStarted == false) {
 			startButton = new Rectangle(690, 590, 95, 50);
 			instructionButton = new Rectangle(startButton.x, startButton.y + 60, 95, 50);
 		}
