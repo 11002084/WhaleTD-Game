@@ -206,19 +206,19 @@ public class Tower extends GameObject implements ActionListener {
 				int targetDirection = target.getDirection();
 
 				if (targetDirection == 1) {
-					targetY -= 45 * target.getSpeed();
+					targetY -= 30 * target.getSpeed();
 				}
 
 				if (targetDirection == 2) {
-					targetX += 45 * target.getSpeed();
+					targetX += 30 * target.getSpeed();
 				}
 
 				if (targetDirection == 3) {
-					targetY += 45 * target.getSpeed();
+					targetY += 30 * target.getSpeed();
 				}
 
 				if (targetDirection == 4) {
-					targetX -= 45 * target.getSpeed();
+					targetX -= 30 * target.getSpeed();
 				}
 
 				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX, targetY, 5, 200, towerType, towerLevel));

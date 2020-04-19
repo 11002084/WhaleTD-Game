@@ -40,6 +40,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int spawnDelayReductionDelay = 20000;
 	int totalTime = 0;
 	Timer enemyTimer = new Timer(10, this);
+	int timeUntilAnnihilator = 300;
 
 	// Other Enemy Variables
 	int towelMoney = 10;
@@ -51,7 +52,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	static int eraserHealth = 250;
 	static int sprayHealth = 500;
 	static int trashcanHealth = 1500;
-	static int theAnnihilatorHealth = 10000;
+	static int theAnnihilatorHealth = 5000;
 	double towelSpeed = 1;
 	double eraserSpeed = 1;
 	double spraySpeed = 1;
@@ -61,7 +62,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// Player Values
 	static int numLives = 10;
-	static int money = 100;
+	static int money = 140;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
 
@@ -84,10 +85,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// ObjectManager Constructor
 	ObjectManager() {
-		if (gameStarted == false) {
 			startButton = new Rectangle(690, 590, 95, 50);
 			instructionButton = new Rectangle(startButton.x, startButton.y + 60, 95, 50);
-		}
+	}
+	
+	public void startGame() {
 		instructionButton = new Rectangle(1000, 10, 100, 100);
 		initTowers();
 		initPaths();
@@ -222,6 +224,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// Update Method
 	void update() {
+		updateObjects();
+		checkCollision();
+		checkHealth();
+		checkLives();
+		purgeObjects();
+	}
+	
+	void updateObjects() {
 		for (int i = 0; i < projectileList.size(); i++) {
 			projectileList.get(i).update();
 		}
@@ -231,17 +241,12 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < enemyList.size(); i++) {
 			enemyList.get(i).update();
 		}
-
-		checkCollision();
-		checkHealth();
-		// checkLives();
-		purgeObjects();
 	}
 
 	// Check Lives and Exit Game if Lives is 0
 	void checkLives() {
 		if (numLives <= 0) {
-			// System.exit(0);
+			System.exit(0);
 		}
 	}
 
@@ -340,8 +345,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.setColor(Color.BLACK);
 			g.drawString("Click Me For", 1005, 25);
 			g.drawString("Instuctions", 1005, 50);
-			g.drawString("Money: $" + money, 650, 50);
-			g.drawString("Lives: " + numLives, 800, 50);
+			g.drawString("Money: $" + money, 550, 50);
+			g.drawString("Lives: " + numLives, 700, 50);
+			g.drawString("Time Left: " + timeUntilAnnihilator, 850, 50);
 		}
 	}
 
@@ -389,7 +395,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 			}
 		}
 
-		if (instructionButton.intersects(e.getX(), e.getY(), 1, 1)) {
+		if (instructionButton.intersects(e.getX(), e.getY()-25, 1, 1)) {
 			JOptionPane.showMessageDialog(null, " Welcome to Whale Tower Defense (without the whales right now)."
 					+ "\n Your goal is to kill those squares coming through the path using towers." + "\n"
 					+ "\n Click on an empty gray space and select one of the colored buttons that pops up to build a tower."
@@ -406,8 +412,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 					+ "\n Don't run out of lives or you lose and the screen will close.");
 		}
 
-		if (startButton.intersects(e.getX(), e.getY(), 1, 1)) {
+		if (startButton.intersects(e.getX(), e.getY()-25, 1, 1)) {
 			gameStarted = true;
+			startGame();
 			System.out.println("Game Start");
 		}
 	}
@@ -430,6 +437,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 		if (e.getSource() == enemyTimer && spawnedTheAnnihilator == false) {
 			spawnCounter += 1;
 			totalTime += 10;
+			
+			if(totalTime % 1000 == 0) {
+				timeUntilAnnihilator--;
+			}
 
 			if (totalTime > spawnStartTowel && spawnCounter % spawnDelayTowel == 0) {
 				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", towelHealth, towelSpeed));
