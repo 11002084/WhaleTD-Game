@@ -15,17 +15,19 @@ import javax.swing.Timer;
 
 public class ObjectManager implements MouseListener, ActionListener {
 	boolean gameStarted = false;
+	boolean wonGame = false;
+	boolean lostGame = false;
 
 	// Enemy Spawning Variables
 	int spawnStartTowel = 5000;
-	int spawnStartEraser = 30000;
-	int spawnStartSpray = 60000;
+	int spawnStartEraser = 40000;
+	int spawnStartSpray = 75000;
 	int spawnStartTrashcan = 120000;
 	int spawnStartTheAnnihilator = 300000;
-	int spawnDelayTowel = 1000;
-	int spawnDelayEraser = 2000;
-	int spawnDelaySpray = 5000;
-	int spawnDelayTrashcan = 10000;
+	int spawnDelayTowel = 5000;
+	int spawnDelayEraser = 10000;
+	int spawnDelaySpray = 15000;
+	int spawnDelayTrashcan = 20000;
 	static boolean spawnedTheAnnihilator = false;
 	int spawnDelayReductionTowel = 100;
 	int spawnDelayReductionEraser = 200;
@@ -36,7 +38,6 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int minSpawnDelaySpray = 500;
 	int minSpawnDelayTrashcan = 1000;
 
-	int spawnCounter = 0;
 	int spawnDelayReductionDelay = 20000;
 	int totalTime = 0;
 	Timer enemyTimer = new Timer(10, this);
@@ -61,8 +62,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int reduceAmount;
 
 	// Player Values
-	static int numLives = 10;
-	static int money = 140;
+	static int numLives = 10000;
+	static int money = 150;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
 
@@ -93,7 +94,6 @@ public class ObjectManager implements MouseListener, ActionListener {
 		instructionButton = new Rectangle(1000, 10, 100, 100);
 		initTowers();
 		initPaths();
-		initEnemies();
 		fake = new Enemy(-69, -420, 0, 0, "eraser", 100, 2);
 		enemyTimer.start();
 		moneyTimer.start();
@@ -364,6 +364,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static void loseLives(Enemy enemy) {
 		enemyList.remove(enemy);
 		numLives -= livesReduction;
+		if(enemy.type.equals("annihilator")) {
+			numLives = 0;
+		}
 	}
 
 	public static void theAnnihilatorProtocol() {
@@ -435,26 +438,25 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == enemyTimer && spawnedTheAnnihilator == false) {
-			spawnCounter += 1;
 			totalTime += 10;
 			
 			if(totalTime % 1000 == 0) {
 				timeUntilAnnihilator--;
 			}
 
-			if (totalTime > spawnStartTowel && spawnCounter % spawnDelayTowel == 0) {
+			if (totalTime > spawnStartTowel && totalTime % spawnDelayTowel == 0) {
 				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", towelHealth, towelSpeed));
 			}
 
-			if (totalTime > spawnStartEraser && spawnCounter % spawnDelayEraser == 0) {
+			if (totalTime > spawnStartEraser && totalTime % spawnDelayEraser == 0) {
 				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", eraserHealth, eraserSpeed));
 			}
 
-			if (totalTime > spawnStartSpray && spawnCounter % spawnDelaySpray == 0) {
+			if (totalTime > spawnStartSpray && totalTime % spawnDelaySpray == 0) {
 				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", sprayHealth, spraySpeed));
 			}
 
-			if (totalTime > spawnStartTrashcan && spawnCounter % spawnDelayTrashcan == 0) {
+			if (totalTime > spawnStartTrashcan && totalTime % spawnDelayTrashcan == 0) {
 				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", trashcanHealth, trashcanSpeed));
 			}
 
