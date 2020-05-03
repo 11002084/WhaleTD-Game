@@ -1,4 +1,5 @@
 import javax.swing.JFrame;
+import javax.swing.JSplitPane;
 
 //I DONT KNOW WHAT IM DOING AAAAAHHHHHH
 

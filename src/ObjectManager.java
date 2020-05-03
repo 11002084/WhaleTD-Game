@@ -22,12 +22,12 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int spawnStartTowel = 5000;
 	int spawnStartEraser = 40000;
 	int spawnStartSpray = 75000;
-	int spawnStartTrashcan = 120000;
+	int spawnStartTrashcan = 100000;
 	int spawnStartTheAnnihilator = 300000;
 	int spawnDelayTowel = 5000;
 	int spawnDelayEraser = 10000;
 	int spawnDelaySpray = 15000;
-	int spawnDelayTrashcan = 20000;
+	int spawnDelayTrashcan = 18000;
 	static boolean spawnedTheAnnihilator = false;
 	int spawnDelayReductionTowel = 100;
 	int spawnDelayReductionEraser = 200;
