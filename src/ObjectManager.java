@@ -60,6 +60,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 	double trashcanSpeed = 1;
 	double theAnnihilatorSpeed = 1;
 	int reduceAmount;
+	
+	//Tower Values
+	int borderWidth = 50;
+	int blockSpace = 150;
 
 	// Player Values
 	static int numLives = 10000;
@@ -91,7 +95,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	}
 	
 	public void startGame() {
-		instructionButton = new Rectangle(1000, 10, 100, 100);
+		instructionButton = new Rectangle(1000, 0, 100, 50);
 		initTowers();
 		initPaths();
 		fake = new Enemy(-69, -420, 0, 0, "eraser", 100, 2);
@@ -127,84 +131,160 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// Creating the motherload of tower objects
 	void initTowers() {
-		towerList.add(new Tower(10, 10, 100, 100));
-		towerList.add(new Tower(10, 310, 100, 100));
-		towerList.add(new Tower(160, 10, 100, 100));
-		towerList.add(new Tower(160, 310, 100, 100));
-		towerList.add(new Tower(160, 610, 100, 100));
-		towerList.add(new Tower(310, 10, 100, 100));
-		towerList.add(new Tower(310, 610, 100, 100));
-		towerList.add(new Tower(460, 160, 100, 100));
-		towerList.add(new Tower(460, 310, 100, 100));
-		towerList.add(new Tower(460, 460, 100, 100));
-		towerList.add(new Tower(610, 460, 100, 100));
-		towerList.add(new Tower(610, 760, 100, 100));
-		towerList.add(new Tower(760, 460, 100, 100));
-		towerList.add(new Tower(910, 610, 100, 100));
-		towerList.add(new Tower(1060, 460, 100, 100));
-		towerList.add(new Tower(1210, 10, 100, 100));
-		towerList.add(new Tower(1210, 160, 100, 100));
-		towerList.add(new Tower(1210, 310, 100, 100));
-		towerList.add(new Tower(1210, 460, 100, 100));
-		towerList.add(new Tower(1210, 760, 100, 100));
-		towerList.add(new Tower(1360, 760, 100, 100));
+//		towerList.add(new Tower(10, 10, 100, 100));
+//		towerList.add(new Tower(10, 310, 100, 100));
+//		towerList.add(new Tower(160, 10, 100, 100));
+//		towerList.add(new Tower(160, 310, 100, 100));
+//		towerList.add(new Tower(160, 610, 100, 100));
+//		towerList.add(new Tower(310, 10, 100, 100));
+//		towerList.add(new Tower(310, 610, 100, 100));
+//		towerList.add(new Tower(460, 160, 100, 100));
+//		towerList.add(new Tower(460, 310, 100, 100));
+//		towerList.add(new Tower(460, 460, 100, 100));
+//		towerList.add(new Tower(610, 460, 100, 100));
+//		towerList.add(new Tower(610, 760, 100, 100));
+//		towerList.add(new Tower(760, 460, 100, 100));
+//		towerList.add(new Tower(910, 610, 100, 100));
+//		towerList.add(new Tower(1060, 460, 100, 100));
+//		towerList.add(new Tower(1210, 10, 100, 100));
+//		towerList.add(new Tower(1210, 160, 100, 100));
+//		towerList.add(new Tower(1210, 310, 100, 100));
+//		towerList.add(new Tower(1210, 460, 100, 100));
+//		towerList.add(new Tower(1210, 760, 100, 100));
+//		towerList.add(new Tower(1360, 760, 100, 100));
+		
+		towerList.add(new Tower(borderWidth + blockSpace * 0, borderWidth + blockSpace * 1, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 1, borderWidth + blockSpace * 1, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 2, borderWidth + blockSpace * 1, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 4, borderWidth + blockSpace * 0, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 4, borderWidth + blockSpace * 1, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 4, borderWidth + blockSpace * 2, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 3, borderWidth + blockSpace * 3, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 2, borderWidth + blockSpace * 3, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 1, borderWidth + blockSpace * 3, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 5, borderWidth + blockSpace * 4, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 6, borderWidth + blockSpace * 3, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 6, borderWidth + blockSpace * 2, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 6, borderWidth + blockSpace * 1, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 8, borderWidth + blockSpace * 0, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 8, borderWidth + blockSpace * 1, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 8, borderWidth + blockSpace * 2, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 8, borderWidth + blockSpace * 3, 100, 100));
+		towerList.add(new Tower(borderWidth + blockSpace * 8, borderWidth + blockSpace * 4, 100, 100));
 	}
 
 	// All paths lead to Rome. These lead to Whalesville
 	void initPaths() {
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 1, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 2, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 3, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 3, borderWidth * 0 + blockSpace * 1, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 3, borderWidth * 0 + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 3, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 2, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 1, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 0, borderWidth * 0 + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 0, borderWidth * 0 + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 1, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 2, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 3, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 4, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 4, borderWidth * 0 + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 5, borderWidth + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth * 0 + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth * 0 + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth * 0 + blockSpace * 1, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 6, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 7, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth * 0 + blockSpace * 1, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth * 0 + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth * 0 + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth * 0 + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 7, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 6, borderWidth * 0 + blockSpace * 5, 100, 100));
+		
+		pathList.add(new Path(borderWidth * 0 + blockSpace * 0, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 0, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 1, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 2, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 3, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 3, borderWidth + blockSpace * 1, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 3, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 2, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 1, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 0, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 0, borderWidth + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 0, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 1, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 2, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 3, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 4, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 4, borderWidth + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth + blockSpace * 1, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 5, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 6, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth + blockSpace * 0, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth + blockSpace * 1, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth + blockSpace * 2, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth + blockSpace * 3, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 7, borderWidth + blockSpace * 4, 100, 100));
+		pathList.add(new Path(borderWidth + blockSpace * 6, borderWidth + blockSpace * 4, 100, 100));
 		// pathList.add(new Path(0, 160, 410, 100));
-		pathList.add(new Path(0, 160, 10, 100));
-		pathList.add(new Path(10, 160, 100, 100));
-		pathList.add(new Path(110, 160, 100, 100));
-		pathList.add(new Path(210, 160, 100, 100));
-		pathList.add(new Path(310, 160, 100, 100));
-		// pathList.add(new Path(310, 160, 100, 400));
-		pathList.add(new Path(310, 260, 100, 100));
-		pathList.add(new Path(310, 360, 100, 100));
-		pathList.add(new Path(310, 460, 100, 100));
-		// pathList.add(new Path(10, 460, 400, 100));
-		pathList.add(new Path(210, 460, 100, 100));
-		pathList.add(new Path(110, 460, 100, 100));
-		pathList.add(new Path(10, 460, 100, 100));
-		// pathList.add(new Path(10, 460, 100, 400));
-		pathList.add(new Path(10, 560, 100, 100));
-		pathList.add(new Path(10, 660, 100, 100));
-		pathList.add(new Path(10, 760, 100, 100));
-		// pathList.add(new Path(10, 760, 550, 100));
-		pathList.add(new Path(110, 760, 100, 100));
-		pathList.add(new Path(210, 760, 100, 100));
-		pathList.add(new Path(310, 760, 100, 100));
-		pathList.add(new Path(410, 760, 100, 100));
-		// pathList.add(new Path(460, 610, 100, 200));
-		pathList.add(new Path(460, 760, 100, 100));
-		pathList.add(new Path(460, 660, 100, 100));
-		pathList.add(new Path(460, 610, 100, 100));
-		// pathList.add(new Path(460, 610, 400, 100));
-		pathList.add(new Path(560, 610, 100, 100));
-		pathList.add(new Path(660, 610, 100, 100));
-		pathList.add(new Path(760, 610, 100, 100));
-		// pathList.add(new Path(760, 610, 100, 250));
-		pathList.add(new Path(760, 710, 100, 100));
-		pathList.add(new Path(760, 760, 100, 100));
-		// pathList.add(new Path(760, 760, 400, 100));
-		pathList.add(new Path(860, 760, 100, 100));
-		pathList.add(new Path(960, 760, 100, 100));
-		// pathList.add(new Path(1060, 610, 100, 200));
-		pathList.add(new Path(1060, 760, 100, 100));
-		pathList.add(new Path(1060, 660, 100, 100));
-		pathList.add(new Path(1060, 610, 100, 100));
-		// pathList.add(new Path(1060, 610, 400, 100));
-		pathList.add(new Path(1160, 610, 100, 100));
-		pathList.add(new Path(1260, 610, 100, 100));
-		pathList.add(new Path(1360, 610, 100, 100));
-		// pathList.add(new Path(1360, 0, 100, 710));
-		pathList.add(new Path(1360, 510, 100, 100));
-		pathList.add(new Path(1360, 410, 100, 100));
-		pathList.add(new Path(1360, 310, 100, 100));
-		pathList.add(new Path(1360, 210, 100, 100));
-		pathList.add(new Path(1360, 110, 100, 100));
-		pathList.add(new Path(1360, 10, 100, 100));
-		pathList.add(new Path(1360, -90, 100, 100));
+//		pathList.add(new Path(0, 160, 10, 100));
+//		pathList.add(new Path(10, 160, 100, 100));
+//		pathList.add(new Path(110, 160, 100, 100));
+//		pathList.add(new Path(210, 160, 100, 100));
+//		pathList.add(new Path(310, 160, 100, 100));
+//		// pathList.add(new Path(310, 160, 100, 400));
+//		pathList.add(new Path(310, 260, 100, 100));
+//		pathList.add(new Path(310, 360, 100, 100));
+//		pathList.add(new Path(310, 460, 100, 100));
+//		// pathList.add(new Path(10, 460, 400, 100));
+//		pathList.add(new Path(210, 460, 100, 100));
+//		pathList.add(new Path(110, 460, 100, 100));
+//		pathList.add(new Path(10, 460, 100, 100));
+//		// pathList.add(new Path(10, 460, 100, 400));
+//		pathList.add(new Path(10, 560, 100, 100));
+//		pathList.add(new Path(10, 660, 100, 100));
+//		pathList.add(new Path(10, 760, 100, 100));
+//		// pathList.add(new Path(10, 760, 550, 100));
+//		pathList.add(new Path(110, 760, 100, 100));
+//		pathList.add(new Path(210, 760, 100, 100));
+//		pathList.add(new Path(310, 760, 100, 100));
+//		pathList.add(new Path(410, 760, 100, 100));
+//		// pathList.add(new Path(460, 610, 100, 200));
+//		pathList.add(new Path(460, 760, 100, 100));
+//		pathList.add(new Path(460, 660, 100, 100));
+//		pathList.add(new Path(460, 610, 100, 100));
+//		// pathList.add(new Path(460, 610, 400, 100));
+//		pathList.add(new Path(560, 610, 100, 100));
+//		pathList.add(new Path(660, 610, 100, 100));
+//		pathList.add(new Path(760, 610, 100, 100));
+//		// pathList.add(new Path(760, 610, 100, 250));
+//		pathList.add(new Path(760, 710, 100, 100));
+//		pathList.add(new Path(760, 760, 100, 100));
+//		// pathList.add(new Path(760, 760, 400, 100));
+//		pathList.add(new Path(860, 760, 100, 100));
+//		pathList.add(new Path(960, 760, 100, 100));
+//		// pathList.add(new Path(1060, 610, 100, 200));
+//		pathList.add(new Path(1060, 760, 100, 100));
+//		pathList.add(new Path(1060, 660, 100, 100));
+//		pathList.add(new Path(1060, 610, 100, 100));
+//		// pathList.add(new Path(1060, 610, 400, 100));
+//		pathList.add(new Path(1160, 610, 100, 100));
+//		pathList.add(new Path(1260, 610, 100, 100));
+//		pathList.add(new Path(1360, 610, 100, 100));
+//		// pathList.add(new Path(1360, 0, 100, 710));
+//		pathList.add(new Path(1360, 510, 100, 100));
+//		pathList.add(new Path(1360, 410, 100, 100));
+//		pathList.add(new Path(1360, 310, 100, 100));
+//		pathList.add(new Path(1360, 210, 100, 100));
+//		pathList.add(new Path(1360, 110, 100, 100));
+//		pathList.add(new Path(1360, 10, 100, 100));
+//		pathList.add(new Path(1360, -90, 100, 100));
+		
 	}
 
 	// Initialize Enemies
@@ -343,11 +423,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.setColor(Color.RED);
 			g.fillRect(instructionButton.x, instructionButton.y, instructionButton.width, instructionButton.height / 2);
 			g.setColor(Color.BLACK);
-			g.drawString("Click Me For", 1005, 25);
-			g.drawString("Instuctions", 1005, 50);
-			g.drawString("Money: $" + money, 550, 50);
-			g.drawString("Lives: " + numLives, 700, 50);
-			g.drawString("Time Left: " + timeUntilAnnihilator, 850, 50);
+			g.drawString("Instuctions", 1015, 15);
+			g.drawString("Money: $" + money, 550, 10);
+			g.drawString("Lives: " + numLives, 700, 10);
+			g.drawString("Time Left: " + timeUntilAnnihilator, 850, 10);
 		}
 	}
 
@@ -445,24 +524,24 @@ public class ObjectManager implements MouseListener, ActionListener {
 			}
 
 			if (totalTime > spawnStartTowel && totalTime % spawnDelayTowel == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "towel", towelHealth, towelSpeed));
+				enemyList.add(new Enemy(-50, 75, 50, 50, "towel", towelHealth, towelSpeed));
 			}
 
 			if (totalTime > spawnStartEraser && totalTime % spawnDelayEraser == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "eraser", eraserHealth, eraserSpeed));
+				enemyList.add(new Enemy(-50, 75, 50, 50, "eraser", eraserHealth, eraserSpeed));
 			}
 
 			if (totalTime > spawnStartSpray && totalTime % spawnDelaySpray == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "spray", sprayHealth, spraySpeed));
+				enemyList.add(new Enemy(-50, 75, 50, 50, "spray", sprayHealth, spraySpeed));
 			}
 
 			if (totalTime > spawnStartTrashcan && totalTime % spawnDelayTrashcan == 0) {
-				enemyList.add(new Enemy(-40, 185, 50, 50, "trashcan", trashcanHealth, trashcanSpeed));
+				enemyList.add(new Enemy(-50, 75, 50, 50, "trashcan", trashcanHealth, trashcanSpeed));
 			}
 
 			if (totalTime > spawnStartTheAnnihilator && spawnedTheAnnihilator == false) {
 				theAnnihilatorProtocol();
-				enemyList.add(new Enemy(-40, 185, 50, 50, "annihilator", theAnnihilatorHealth, theAnnihilatorSpeed));
+				enemyList.add(new Enemy(-40, 75, 50, 50, "annihilator", theAnnihilatorHealth, theAnnihilatorSpeed));
 				spawnedTheAnnihilator = true;
 			}
 

@@ -13,8 +13,8 @@ public class WhaleTD {
 	GamePanel gamePanel;
 	
 	//Dimension Variables
-	public static final int HEIGHT = 890;
-	public static final int WIDTH = 1470;
+	public static final int HEIGHT = 800;
+	public static final int WIDTH = 1400;
 	
 	//Constructor
 	WhaleTD(JFrame frame, GamePanel gamePanel){
