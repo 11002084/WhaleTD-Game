@@ -66,7 +66,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int blockSpace = 150;
 
 	// Player Values
-	static int numLives = 10000;
+	static int numLives = 10;
 	static int money = 150;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
@@ -90,8 +90,8 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// ObjectManager Constructor
 	ObjectManager() {
-			startButton = new Rectangle(690, 590, 95, 50);
-			instructionButton = new Rectangle(startButton.x, startButton.y + 60, 95, 50);
+			startButton = new Rectangle(650, 375, 100, 50);
+			instructionButton = new Rectangle(startButton.x, startButton.y + 60, 100, 50);
 	}
 	
 	public void startGame() {
@@ -307,6 +307,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		checkCollision();
 		checkHealth();
 		checkLives();
+		checkAnnihilator();
 		purgeObjects();
 	}
 	
@@ -324,8 +325,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// Check Lives and Exit Game if Lives is 0
 	void checkLives() {
-		if (numLives <= 0) {
-			System.exit(0);
+		if (numLives <= 0 && !lostGame) {
+			lostGame = true;
+		}
+	}
+	
+	void checkAnnihilator() {
+		if(spawnedTheAnnihilator && enemyList.size() == 0 && !wonGame) {
+			wonGame = true;
 		}
 	}
 
@@ -390,16 +397,26 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.fillRect(startButton.x, startButton.y, startButton.width, startButton.height);
 			g.fillRect(instructionButton.x, instructionButton.y, instructionButton.width, instructionButton.height);
 			g.setColor(Color.BLACK);
-			g.drawString("START GAME", startButton.x + 10, startButton.y + 30);
-			g.drawString("INSTRUCTIONS", instructionButton.x + 10, instructionButton.y + 30);
+			g.drawString("START GAME", startButton.x + 15, startButton.y + 30);
+			g.drawString("INSTRUCTIONS", instructionButton.x + 5, instructionButton.y + 30);
 			g.drawString("WHALE TOWER DEFENSE", startButton.x - 25, startButton.y - 20);
-			g.drawString("sorry the start menu is bad rn", 50, 50);
-
+		} else if (gameStarted && wonGame) {
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
+			g.setColor(Color.BLACK);
+			g.drawString("YOU WIN!!", 700, 400);
+		} else if (gameStarted && lostGame) {
+			g.setColor(Color.WHITE);
+			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
+			g.setColor(Color.BLACK);
+			g.drawString("YOU LOST!!", 700, 400);
 		} else if (gameStarted == true) {
 			// Redrawing Background
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
-
+			
+			startButton = new Rectangle(-10, 0, 0, 0);
+			
 			for (int i = 0; i < pathList.size(); i++) {
 				pathList.get(i).draw(g);
 			}
