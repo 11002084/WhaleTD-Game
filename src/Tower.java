@@ -139,7 +139,8 @@ public class Tower extends GameObject implements ActionListener {
 			g.setColor(Color.GREEN);
 			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade "+ towerLevel*60, (int) x, (int) y + 45);
+			g.drawString("Upgrade Damage", (int) x, (int) y + 30);
+			g.drawString("" + towerLevel*60, (int) x, (int) y + 45);
 			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x, (int) y + 95);
@@ -147,7 +148,8 @@ public class Tower extends GameObject implements ActionListener {
 			g.setColor(Color.CYAN);
 			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade "+ towerLevel*100, (int) x, (int) y + 45);
+			g.drawString("Upgrade Damage", (int) x, (int) y + 30);
+			g.drawString("" + towerLevel*100, (int) x, (int) y + 45);
 			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x, (int) y + 95);
@@ -155,7 +157,8 @@ public class Tower extends GameObject implements ActionListener {
 			g.setColor(Color.PINK);
 			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade "+ towerLevel*130, (int) x, (int) y + 45);
+			g.drawString("Upgrade Damage", (int) x, (int) y + 30);
+			g.drawString("" + towerLevel*130, (int) x, (int) y + 45);
 			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x, (int) y + 95);

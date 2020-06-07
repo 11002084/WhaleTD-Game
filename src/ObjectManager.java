@@ -81,6 +81,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	public static Rectangle exitButton2;
 	public static Rectangle instructionButton;
 	public static Rectangle startButton;
+	public static Rectangle restartButton;
 
 	// Arraylist of Path Objects
 	public static ArrayList<Path> pathList = new ArrayList<Path>();
@@ -92,6 +93,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	ObjectManager() {
 			startButton = new Rectangle(650, 375, 100, 50);
 			instructionButton = new Rectangle(startButton.x, startButton.y + 60, 100, 50);
+			restartButton = new Rectangle(650, 500, 100, 50);
 	}
 	
 	public void startGame() {
@@ -404,12 +406,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
 			g.setColor(Color.BLACK);
-			g.drawString("YOU WIN!!", 700, 400);
+			g.drawString("YOU WIN!!", 700, 375);
 		} else if (gameStarted && lostGame) {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
 			g.setColor(Color.BLACK);
-			g.drawString("YOU LOST!!", 700, 400);
+			g.drawString("YOU LOST!!", 700, 375);
+			g.setColor(Color.RED);
+			g.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
 		} else if (gameStarted == true) {
 			// Redrawing Background
 			g.setColor(Color.WHITE);
