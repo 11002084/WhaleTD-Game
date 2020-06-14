@@ -66,10 +66,15 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int blockSpace = 150;
 
 	// Player Values
-	static int numLives = 10;
+	static int numLives = 1;
 	static int money = 150;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
+	
+	// Some Stats
+	static int numProjectilesFired = 0;
+	static int numTowerUpgrades = 0;
+	static int totalMoneySpent = 0;
 
 	// Objects and Rectangles
 	public static Enemy fake;
@@ -91,9 +96,9 @@ public class ObjectManager implements MouseListener, ActionListener {
 
 	// ObjectManager Constructor
 	ObjectManager() {
-			startButton = new Rectangle(650, 375, 100, 50);
-			instructionButton = new Rectangle(startButton.x, startButton.y + 60, 100, 50);
-			restartButton = new Rectangle(650, 500, 100, 50);
+		startButton = new Rectangle(650, 375, 100, 50);
+		instructionButton = new Rectangle(startButton.x, startButton.y + 60, 100, 50);
+		restartButton = new Rectangle(650, 400, 100, 50);
 	}
 	
 	public void startGame() {
@@ -101,6 +106,33 @@ public class ObjectManager implements MouseListener, ActionListener {
 		initTowers();
 		initPaths();
 		fake = new Enemy(-69, -420, 0, 0, "eraser", 100, 2);
+		enemyTimer.start();
+		moneyTimer.start();
+	}
+	
+	public void RestartGame() {
+		enemyTimer.stop();
+		moneyTimer.stop();
+		towerList.clear();
+		pathList.clear();
+		enemyList.clear();
+		initTowers();
+		initPaths();
+		fake = new Enemy(-69, -420, 0, 0, "eraser", 100, 2);
+		numLives = 10;
+		money = 150;
+		totalTime = 0;
+		timeUntilAnnihilator = 300;
+		wonGame = false;
+		lostGame = false;
+		spawnDelayTowel = 5000;
+		spawnDelayEraser = 10000;
+		spawnDelaySpray = 15000;
+		spawnDelayTrashcan = 18000;
+		spawnedTheAnnihilator = false;
+		numProjectilesFired = 0;
+		numTowerUpgrades = 0;
+		totalMoneySpent = 0;
 		enemyTimer.start();
 		moneyTimer.start();
 	}
@@ -405,15 +437,23 @@ public class ObjectManager implements MouseListener, ActionListener {
 		} else if (gameStarted && wonGame) {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
+			g.setColor(Color.RED);
+			g.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
 			g.setColor(Color.BLACK);
-			g.drawString("YOU WIN!!", 700, 375);
+			g.drawString("YOU WIN!!", 670, 375);
+			g.drawString("Restart", restartButton.x, restartButton.y);
+			g.drawString("Restart", restartButton.x + 30, restartButton.y + 30);
 		} else if (gameStarted && lostGame) {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
-			g.setColor(Color.BLACK);
-			g.drawString("YOU LOST!!", 700, 375);
 			g.setColor(Color.RED);
 			g.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
+			g.setColor(Color.BLACK);
+			g.drawString("YOU LOST!!", 670, 375);
+			g.drawString("Restart", restartButton.x + 30, restartButton.y + 30);
+			g.drawString("Total Money Spent: $" + totalMoneySpent, 10, 10);
+			g.drawString("Number of Tower Upgrades: " + numTowerUpgrades, 10, 20);
+			g.drawString("Number of Projectiles Fired: " + numProjectilesFired, 10, 30);
 		} else if (gameStarted == true) {
 			// Redrawing Background
 			g.setColor(Color.WHITE);
@@ -514,10 +554,14 @@ public class ObjectManager implements MouseListener, ActionListener {
 					+ "\n Don't run out of lives or you lose and the screen will close.");
 		}
 
-		if (startButton.intersects(e.getX(), e.getY()-25, 1, 1)) {
+		if (startButton.intersects(e.getX(), e.getY()-25, 1, 1) && !gameStarted) {
 			gameStarted = true;
 			startGame();
 			System.out.println("Game Start");
+		}
+		
+		if(restartButton.intersects(e.getX(), e.getY()-25, 1, 1) && (wonGame || lostGame)) {
+			RestartGame();
 		}
 	}
 

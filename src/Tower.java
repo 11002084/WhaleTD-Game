@@ -29,6 +29,9 @@ public class Tower extends GameObject implements ActionListener {
 	Tower(int x, int y, int width, int height) {
 		super(x, y, width, height);
 		this.isActive = false;
+		this.menu = false;
+		this.towerType = null;
+		this.towerLevel = 0;
 	}
 
 	// Paint Component Method
@@ -60,6 +63,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerLevel = 1;
 				buyTower();
 				ObjectManager.money -= arrowConstructCost;
+				ObjectManager.totalMoneySpent += arrowConstructCost;
 				this.shootTimer = new Timer(350, this);
 				shootTimer.start();
 				return true;
@@ -71,6 +75,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerLevel = 1;
 				buyTower();
 				ObjectManager.money -= rifleConstructCost;
+				ObjectManager.totalMoneySpent += rifleConstructCost;
 				this.shootTimer = new Timer(1000, this);
 				shootTimer.start();
 				return true;
@@ -82,6 +87,7 @@ public class Tower extends GameObject implements ActionListener {
 				towerLevel = 1;
 				buyTower();
 				ObjectManager.money -= cannonConstructCost;
+				ObjectManager.totalMoneySpent += cannonConstructCost;
 				this.shootTimer = new Timer(2500, this);
 				shootTimer.start();
 				return true;
@@ -98,6 +104,7 @@ public class Tower extends GameObject implements ActionListener {
 			if (mouse.intersects(ObjectManager.upgradeButton)) {
 				if (towerType == "arrow" && ObjectManager.money >= towerLevel*arrowUpgradeMultiplier) {
 					ObjectManager.money -= towerLevel*arrowUpgradeMultiplier;
+					ObjectManager.totalMoneySpent += towerLevel*arrowUpgradeMultiplier;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
@@ -105,6 +112,7 @@ public class Tower extends GameObject implements ActionListener {
 				}
 				else if (towerType == "rifle" && ObjectManager.money >= towerLevel*rifleUpgradeMultiplier) {
 					ObjectManager.money -= towerLevel*rifleUpgradeMultiplier;
+					ObjectManager.totalMoneySpent += towerLevel*rifleUpgradeMultiplier;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
@@ -112,11 +120,13 @@ public class Tower extends GameObject implements ActionListener {
 				}
 				else if (towerType == "cannon" && ObjectManager.money >= towerLevel*cannonUpgradeMultiplier) {
 					ObjectManager.money -= towerLevel*cannonUpgradeMultiplier;
+					ObjectManager.totalMoneySpent += towerLevel*cannonUpgradeMultiplier;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
 					return true;
 				}
+				ObjectManager.numTowerUpgrades++;
 			} else if (mouse.intersects(ObjectManager.exitButton2)) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;
@@ -225,6 +235,7 @@ public class Tower extends GameObject implements ActionListener {
 				}
 
 				ObjectManager.addProjectile(new Projectile(x + (width / 2) - 5, y + (height / 2) - 5, 10, 10, targetX, targetY, 5, 200, towerType, towerLevel));
+				ObjectManager.numProjectilesFired++;
 			}
 		}
 	}
