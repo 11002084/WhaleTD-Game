@@ -28,10 +28,17 @@ public class Tower extends GameObject implements ActionListener {
 	// Constructor :)
 	Tower(int x, int y, int width, int height) {
 		super(x, y, width, height);
-		this.isActive = false;
-		this.menu = false;
-		this.towerType = null;
-		this.towerLevel = 0;
+		resetStats();
+	}
+	
+	public void resetStats() {
+		if(isActive) {
+			this.shootTimer.stop();
+			isActive = false;
+		}
+		menu = false;
+		towerType = null;
+		towerLevel = 0;
 	}
 
 	// Paint Component Method

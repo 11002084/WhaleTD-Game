@@ -66,7 +66,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int blockSpace = 150;
 
 	// Player Values
-	static int numLives = 1;
+	static int numLives = 10;
 	static int money = 150;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
@@ -75,6 +75,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	static int numProjectilesFired = 0;
 	static int numTowerUpgrades = 0;
 	static int totalMoneySpent = 0;
+	static int totalEnemiesDefeated = 0;
 
 	// Objects and Rectangles
 	public static Enemy fake;
@@ -111,13 +112,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 	}
 	
 	public void RestartGame() {
-		enemyTimer.stop();
-		moneyTimer.stop();
-		towerList.clear();
-		pathList.clear();
-		enemyList.clear();
-		initTowers();
 		initPaths();
+		for(int i=0; i<towerList.size(); i++) {
+			towerList.get(i).resetStats();
+		}
 		fake = new Enemy(-69, -420, 0, 0, "eraser", 100, 2);
 		numLives = 10;
 		money = 150;
@@ -133,6 +131,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		numProjectilesFired = 0;
 		numTowerUpgrades = 0;
 		totalMoneySpent = 0;
+		totalEnemiesDefeated = 0;
 		enemyTimer.start();
 		moneyTimer.start();
 	}
@@ -361,12 +360,20 @@ public class ObjectManager implements MouseListener, ActionListener {
 	void checkLives() {
 		if (numLives <= 0 && !lostGame) {
 			lostGame = true;
+			enemyTimer.stop();
+			moneyTimer.stop();
+			pathList.clear();
+			enemyList.clear();
 		}
 	}
 	
 	void checkAnnihilator() {
 		if(spawnedTheAnnihilator && enemyList.size() == 0 && !wonGame) {
 			wonGame = true;
+			enemyTimer.stop();
+			moneyTimer.stop();
+			pathList.clear();
+			enemyList.clear();
 		}
 	}
 
@@ -387,6 +394,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 		for (int i = 0; i < enemyList.size(); i++) {
 			if (enemyList.get(i).health <= 0) {
 				enemyList.get(i).isAlive = false;
+				totalEnemiesDefeated++;
 			}
 		}
 	}
@@ -443,6 +451,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.drawString("YOU WIN!!", 670, 375);
 			g.drawString("Restart", restartButton.x, restartButton.y);
 			g.drawString("Restart", restartButton.x + 30, restartButton.y + 30);
+			g.drawString("Total Money Spent: $" + totalMoneySpent, 10, 10);
+			g.drawString("Number of Enemies Defeated: " + totalEnemiesDefeated, 10, 20);
+			g.drawString("Number of Tower Upgrades: " + numTowerUpgrades, 10, 30);
+			g.drawString("Number of Projectiles Fired: " + numProjectilesFired, 10, 40);
 		} else if (gameStarted && lostGame) {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
@@ -451,9 +463,10 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.setColor(Color.BLACK);
 			g.drawString("YOU LOST!!", 670, 375);
 			g.drawString("Restart", restartButton.x + 30, restartButton.y + 30);
-			g.drawString("Total Money Spent: $" + totalMoneySpent, 10, 10);
-			g.drawString("Number of Tower Upgrades: " + numTowerUpgrades, 10, 20);
-			g.drawString("Number of Projectiles Fired: " + numProjectilesFired, 10, 30);
+			g.drawString("Total Money Spent: $" + totalMoneySpent, 650, restartButton.y + 70);
+			g.drawString("Number of Enemies Defeated: " + totalEnemiesDefeated, 650, restartButton.y + 85);
+			g.drawString("Number of Tower Upgrades: " + numTowerUpgrades, 650, restartButton.y + 100);
+			g.drawString("Number of Projectiles Fired: " + numProjectilesFired, 650, restartButton.y + 115);
 		} else if (gameStarted == true) {
 			// Redrawing Background
 			g.setColor(Color.WHITE);
