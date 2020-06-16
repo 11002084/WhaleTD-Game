@@ -449,12 +449,11 @@ public class ObjectManager implements MouseListener, ActionListener {
 			g.fillRect(restartButton.x, restartButton.y, restartButton.width, restartButton.height);
 			g.setColor(Color.BLACK);
 			g.drawString("YOU WIN!!", 670, 375);
-			g.drawString("Restart", restartButton.x, restartButton.y);
 			g.drawString("Restart", restartButton.x + 30, restartButton.y + 30);
-			g.drawString("Total Money Spent: $" + totalMoneySpent, 10, 10);
-			g.drawString("Number of Enemies Defeated: " + totalEnemiesDefeated, 10, 20);
-			g.drawString("Number of Tower Upgrades: " + numTowerUpgrades, 10, 30);
-			g.drawString("Number of Projectiles Fired: " + numProjectilesFired, 10, 40);
+			g.drawString("Total Money Spent: $" + totalMoneySpent, 650, restartButton.y + 70);
+			g.drawString("Number of Enemies Defeated: " + totalEnemiesDefeated, 650, restartButton.y + 85);
+			g.drawString("Number of Tower Upgrades: " + numTowerUpgrades, 650, restartButton.y + 100);
+			g.drawString("Number of Projectiles Fired: " + numProjectilesFired, 650, restartButton.y + 115);
 		} else if (gameStarted && lostGame) {
 			g.setColor(Color.WHITE);
 			g.fillRect(0, 0, WhaleTD.WIDTH, WhaleTD.HEIGHT);
