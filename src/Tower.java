@@ -112,6 +112,7 @@ public class Tower extends GameObject implements ActionListener {
 				if (towerType == "arrow" && ObjectManager.money >= towerLevel*arrowUpgradeMultiplier) {
 					ObjectManager.money -= towerLevel*arrowUpgradeMultiplier;
 					ObjectManager.totalMoneySpent += towerLevel*arrowUpgradeMultiplier;
+					ObjectManager.numTowerUpgrades++;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
@@ -120,6 +121,7 @@ public class Tower extends GameObject implements ActionListener {
 				else if (towerType == "rifle" && ObjectManager.money >= towerLevel*rifleUpgradeMultiplier) {
 					ObjectManager.money -= towerLevel*rifleUpgradeMultiplier;
 					ObjectManager.totalMoneySpent += towerLevel*rifleUpgradeMultiplier;
+					ObjectManager.numTowerUpgrades++;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
@@ -128,12 +130,12 @@ public class Tower extends GameObject implements ActionListener {
 				else if (towerType == "cannon" && ObjectManager.money >= towerLevel*cannonUpgradeMultiplier) {
 					ObjectManager.money -= towerLevel*cannonUpgradeMultiplier;
 					ObjectManager.totalMoneySpent += towerLevel*cannonUpgradeMultiplier;
+					ObjectManager.numTowerUpgrades++;
 					towerLevel++;
 					ObjectManager.disableMenus(this);
 					menu = !menu;
 					return true;
 				}
-				ObjectManager.numTowerUpgrades++;
 			} else if (mouse.intersects(ObjectManager.exitButton2)) {
 				ObjectManager.disableMenus(this);
 				menu = !menu;

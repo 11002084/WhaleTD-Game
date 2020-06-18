@@ -368,7 +368,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	}
 	
 	void checkAnnihilator() {
-		if(spawnedTheAnnihilator && enemyList.size() == 0 && !wonGame) {
+		if(spawnedTheAnnihilator && enemyList.size() == 0 && !wonGame && !lostGame) {
 			wonGame = true;
 			enemyTimer.stop();
 			moneyTimer.stop();
