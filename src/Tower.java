@@ -21,6 +21,10 @@ public class Tower extends GameObject implements ActionListener {
 	int arrowUpgradeMultiplier = 60;
 	int rifleUpgradeMultiplier = 100;
 	int cannonUpgradeMultiplier = 130;
+	
+	int arrowDamageMultiplier = 5;
+	int rifleDamageMultiplier = 15;
+	int cannonDamageMultiplier = 30;
 
 	// Rectangle variable
 	Rectangle tower;
@@ -158,8 +162,8 @@ public class Tower extends GameObject implements ActionListener {
 			g.setColor(Color.GREEN);
 			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade Damage", (int) x, (int) y + 30);
-			g.drawString("" + towerLevel*60, (int) x, (int) y + 45);
+			g.drawString("+5 Damage", (int) x, (int) y + 30);
+			g.drawString("$" + towerLevel*60, (int) x, (int) y + 45);
 			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x, (int) y + 95);
@@ -167,8 +171,8 @@ public class Tower extends GameObject implements ActionListener {
 			g.setColor(Color.CYAN);
 			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade Damage", (int) x, (int) y + 30);
-			g.drawString("" + towerLevel*100, (int) x, (int) y + 45);
+			g.drawString("+15 Damage", (int) x, (int) y + 30);
+			g.drawString("$" + towerLevel*100, (int) x, (int) y + 45);
 			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x, (int) y + 95);
@@ -176,8 +180,8 @@ public class Tower extends GameObject implements ActionListener {
 			g.setColor(Color.PINK);
 			g.fillRect((int) x, (int) y, 100, 50);
 			g.setColor(Color.BLACK);
-			g.drawString("Upgrade Damage", (int) x, (int) y + 30);
-			g.drawString("" + towerLevel*130, (int) x, (int) y + 45);
+			g.drawString("+30 Damage", (int) x, (int) y + 30);
+			g.drawString("$" + towerLevel*130, (int) x, (int) y + 45);
 			g.fillRect((int) x, (int) y + 50, 100, 50);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x, (int) y + 95);
@@ -190,9 +194,9 @@ public class Tower extends GameObject implements ActionListener {
 			g.fillRect((int) x, (int) y + 50, 50, 50);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + 50, (int) y + 50, 50, 50);
-			g.drawString("40", (int) x, (int) y + 45);
-			g.drawString("60", (int) x + 50, (int) y + 45);
-			g.drawString("75", (int) x, (int) y + 95);
+			g.drawString("$40", (int) x, (int) y + 45);
+			g.drawString("$60", (int) x + 50, (int) y + 45);
+			g.drawString("$75", (int) x, (int) y + 95);
 			g.setColor(Color.WHITE);
 			g.drawString("<-", (int) x + 50, (int) y + 95);
 		} else if (menu == false && towerLevel > 0) {
