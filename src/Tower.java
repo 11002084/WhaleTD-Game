@@ -201,7 +201,19 @@ public class Tower extends GameObject implements ActionListener {
 			g.drawString("<-", (int) x + 50, (int) y + 95);
 		} else if (menu == false && towerLevel > 0) {
 			g.setColor(Color.BLACK);
-			g.drawString("" + towerLevel, (int) x + 45, (int) y + 55);
+			g.drawString("Level: " + towerLevel, (int) x + 15, (int) y + 55);
+			
+			switch(towerType) {
+			case "arrow":
+				g.drawString("Damage: " + (towerLevel * arrowDamageMultiplier),(int) x + 15, (int) y + 65);
+				break;
+			case "rifle":
+				g.drawString("Damage: " + (10 + (towerLevel * rifleDamageMultiplier)),(int) x + 15, (int) y + 65);
+				break;
+			case "cannon":
+				g.drawString("Damage: " + (20 + (towerLevel * cannonDamageMultiplier)),(int) x + 15, (int) y + 65);
+				break;
+			}
 		}
 	}
 
