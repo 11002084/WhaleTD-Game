@@ -73,6 +73,7 @@ public class Enemy extends GameObject {
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + towelHealthbarValue, (int) y - 20, 50 - towelHealthbarValue, 10);
+			g.drawString(health + "", (int) x + 15, (int) y + 30);
 		} else if (type.equals("eraser")) {
 			g.setColor(Color.GREEN);
 			g.fillRect((int) x, (int) y, width, height);
@@ -80,6 +81,7 @@ public class Enemy extends GameObject {
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + eraserHealthbarValue, (int) y - 20, 50 - eraserHealthbarValue, 10);
+			g.drawString(health + "", (int) x + 15, (int) y + 30);
 		} else if (type.equals("spray")) {
 			g.setColor(Color.BLUE);
 			g.fillRect((int) x, (int) y, width, height);
@@ -87,6 +89,7 @@ public class Enemy extends GameObject {
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + sprayHealthbarValue, (int) y - 20, 50 - sprayHealthbarValue, 10);
+			g.drawString(health + "", (int) x + 15, (int) y + 30);
 		} else if (type.equals("trashcan")) {
 			g.setColor(Color.DARK_GRAY);
 			g.fillRect((int) x, (int) y, width, height);
@@ -94,6 +97,8 @@ public class Enemy extends GameObject {
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + trashcanHealthbarValue, (int) y - 20, 50 - trashcanHealthbarValue, 10);
+			g.setColor(Color.WHITE);
+			g.drawString(health + "", (int) x + 15, (int) y + 30);
 		} else if (type.equals("annihilator")) {
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x, (int) y, width, height);
@@ -101,6 +106,8 @@ public class Enemy extends GameObject {
 			g.fillRect((int) x, (int) y - 20, 50, 10);
 			g.setColor(Color.BLACK);
 			g.fillRect((int) x + theAnnihilatorHealthbarValue, (int) y - 20, 50 - theAnnihilatorHealthbarValue, 10);
+			g.setColor(Color.WHITE);
+			g.drawString(health + "", (int) x + 15, (int) y + 30);
 		}
 	}
 
