@@ -66,7 +66,7 @@ public class ObjectManager implements MouseListener, ActionListener {
 	int blockSpace = 150;
 
 	// Player Values
-	static int numLives = 1000;
+	static int numLives = 10;
 	static int money = 150;
 	static int livesReduction = 1;
 	Timer moneyTimer = new Timer(1000, this);
